@@ -1,0 +1,44 @@
+{
+  "screenshots": 48,
+  "angles": 16,
+  "painting_options": 6,
+  "checks": [
+    {
+      "painting": "tower",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    },
+    {
+      "painting": "commons",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    },
+    {
+      "painting": "water",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    },
+    {
+      "painting": "workshop",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    },
+    {
+      "painting": "basin",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    },
+    {
+      "painting": "garden",
+      "rgba16_encoding": "passed",
+      "tile_bytes": 4096,
+      "halves_match_full_image": true
+    }
+  ],
+  "limits": "Framebuffer screenshots and texture encoding verified. Painting not installed or viewed on a castle painting surface."
+}

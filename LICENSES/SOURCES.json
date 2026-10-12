@@ -1,0 +1,17 @@
+{
+  "retrieved": "2026-10-12",
+  "texts": {
+    "GPL-3.0-or-later.txt": {
+      "spdx": "GPL-3.0-or-later",
+      "canonical_url": "https://www.gnu.org/licenses/gpl-3.0.html",
+      "copied_from": "Debian common-licenses GPL-3, unmodified",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    "CC-BY-SA-4.0.txt": {
+      "spdx": "CC-BY-SA-4.0",
+      "canonical_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.en",
+      "copied_from": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC-BY-SA-4.0.txt",
+      "sha256": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+// water_mist_particle.inc.c
+// Moving breath mist, emitted from Mario; distinct from the home-anchored WaterMist2 effect.
+
+void bhv_water_mist_spawn_loop(void) {
+    cur_obj_clear_particle_parent_flags(ACTIVE_PARTICLE_BREATH);
+    spawn_object(o, MODEL_MIST, bhvWaterMist);
+}
+
+void bhv_water_mist_loop(void) {
+    f32 scale;
+
+    if (o->oTimer == 0) {
+        o->oMoveAngleYaw = gMarioObject->oMoveAngleYaw;
+        obj_translate_xz_random(o, 10.0f);
+    }
+
+    cur_obj_move_using_fvel_and_gravity();
+    o->oOpacity -= 42;
+    // Grow as opacity falls; retain this scale update before the deletion check.
+    scale = (254 - o->oOpacity) / 254.0f * 1.0f + 0.5f;
+    cur_obj_scale(scale);
+
+    if (o->oOpacity < 2) {
+        obj_mark_for_deletion(o);
+    }
+}

@@ -1,0 +1,11 @@
+short-name: physics_lab
+full-name: Physics Lab
+texture-file: []
+area-count: 2
+objects: []
+shared-path: []
+skybox-bin: water
+texture-bin: generic
+effects: false
+actor-bins: []
+common-bin: [common0]

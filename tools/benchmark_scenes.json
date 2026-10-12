@@ -1,0 +1,206 @@
+{
+  "bob-standing": {
+    "description": "Ordinary BoB entry, neutral input and native camera.",
+    "level": "LEVEL_BOB",
+    "area": 1,
+    "node": 10,
+    "setup_frame": 30,
+    "sample_start": 90,
+    "sample_frames": 120
+  },
+  "lab-walking": {
+    "description": "Physics Lab entry with sustained half-stick walking.",
+    "level": "LEVEL_PHYSICS_LAB",
+    "area": 1,
+    "node": 10,
+    "setup_frame": 30,
+    "sample_start": 90,
+    "sample_frames": 120,
+    "inputs": [{"from": 60, "until": 240, "stick": [0, 32]}]
+  },
+  "bowser3-sky-fire": {
+    "description": "Bowser 3 sky fire, including spawning and cleanup; anchored invulnerable observer.",
+    "level": "LEVEL_BOWSER_3",
+    "area": 1,
+    "node": 10,
+    "setup_frame": 30,
+    "sample_start": 90,
+    "sample_frames": 360,
+    "anchor": true,
+    "setup": {"gCamera->cutscene": 0, "gCutsceneTimer": 32768,
+              "gDialogID": -1, "gTimeStopState": 0},
+    "mario": {
+      "position": [0, 307, 1200],
+      "set": {"action": 205521409, "health": 2176, "invincTimer": 30}
+    },
+    "camera": {"position": [0, 1100, 2600], "focus": [0, 450, 0]},
+    "events": [{
+      "frame": 90,
+      "behavior": "bhvBowser",
+      "set": {"rawData.asS32[49]": "BOWSER_ACT_SPIT_FIRE_INTO_SKY",
+              "rawData.asS32[51]": 0, "rawData.asS32[65]": 0}
+    }],
+    "observe_behaviors": ["bhvFlameBowser", "bhvFlameFloatingLanding", "bhvBlueBowserFlame"]
+  },
+  "castle-bob-idle": {
+    "level": "LEVEL_CASTLE",
+    "area": 1,
+    "node": 0,
+    "setup_frame": 30,
+    "sample_start": 90,
+    "sample_frames": 120,
+    "mario": {
+      "position": [
+        -4900,
+        512,
+        -460
+      ],
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "forward_speed": 0,
+      "set": {
+        "action": 205521409,
+        "health": 2176
+      }
+    },
+    "camera": {
+      "position": [
+        -4200,
+        930,
+        -460
+      ],
+      "focus": [
+        -5222,
+        700,
+        -460
+      ]
+    },
+    "checks": [
+      {
+        "expression": "gMarioState->pos[0]",
+        "min": -4910,
+        "max": -4890
+      },
+      {
+        "expression": "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->state",
+        "min": 0,
+        "max": 0
+      }
+    ],
+    "description": "Neutral observer facing the idle BoB portrait; no ripple setup."
+  },
+  "castle-bob-ripple": {
+    "level": "LEVEL_CASTLE",
+    "area": 1,
+    "node": 0,
+    "setup_frame": 30,
+    "sample_start": 45,
+    "sample_frames": 30,
+    "mario": {
+      "position": [
+        -4900,
+        512,
+        -460
+      ],
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "forward_speed": 0,
+      "set": {
+        "action": 205521409,
+        "health": 2176
+      }
+    },
+    "camera": {
+      "position": [
+        -4200,
+        930,
+        -460
+      ],
+      "focus": [
+        -5222,
+        700,
+        -460
+      ]
+    },
+    "checks": [
+      {
+        "expression": "gMarioState->pos[0]",
+        "min": -4910,
+        "max": -4890
+      },
+      {
+        "expression": "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->state",
+        "min": 1,
+        "max": 1
+      }
+    ],
+    "description": "Single native passive BoB ripple from its normal magnitude/rate/decay. Observer does not enter the painting.",
+    "setup": {
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->state": 1,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->currRippleMag": 20,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->rippleDecay": 0.9608,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->currRippleRate": 0.24,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->dispersionFactor": 40,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->rippleTimer": 0,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->rippleX": 307,
+      "((struct Painting *)((((unsigned int)&bob_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->rippleY": 102.4
+    }
+  },
+  "castle-hmc-ripple": {
+    "description": "Natural continuous HMC floor ripple, triggered by its doorway D0 floor. Neutral observer stays outside the entry warp surface.",
+    "level": "LEVEL_CASTLE",
+    "area": 3,
+    "node": 0,
+    "setup_frame": 30,
+    "sample_start": 90,
+    "sample_frames": 180,
+    "mario": {
+      "position": [
+        1229,
+        -1074,
+        -2630
+      ],
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "forward_speed": 0,
+      "set": {
+        "action": 205521409,
+        "health": 2176
+      }
+    },
+    "camera": {
+      "position": [
+        1700,
+        -750,
+        -2200
+      ],
+      "focus": [
+        2480,
+        -1480,
+        -2660
+      ]
+    },
+    "checks": [
+      {
+        "expression": "((struct Painting *)((((unsigned int)&hmc_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->state",
+        "min": 1,
+        "max": 1,
+        "frame": 90
+      },
+      {
+        "expression": "((struct Painting *)((((unsigned int)&hmc_painting) & 0xffffff) + sSegmentTable[7] + 0x80000000))->rippleTimer",
+        "min": 1,
+        "frame": 90
+      }
+    ]
+  }
+}

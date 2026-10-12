@@ -1,0 +1,802 @@
+#ifndef SOUNDS_H
+#define SOUNDS_H
+
+// Sound Magic Definition:
+// First Byte (Upper Nibble): Sound Bank (not the same as audio bank!)
+// First Byte (Lower Nibble): Bitflags for audio playback?
+// Second Byte: Sound ID
+// Third Byte: Priority
+// Fourth Byte (Upper Nibble): More bitflags
+// Fourth Byte (Lower Nibble): Sound Status (this is set to SOUND_STATUS_PLAYING when passed to the audio driver.)
+#define SOUND_ARG_LOAD(bank, soundID, priority, flags) (\
+    ((u32) (bank) << SOUNDARGS_SHIFT_BANK) | \
+    ((u32) (soundID) << SOUNDARGS_SHIFT_SOUNDID) | \
+    ((u32) (priority) << SOUNDARGS_SHIFT_PRIORITY) | \
+    (flags) | \
+    SOUND_STATUS_WAITING)
+
+#define SOUNDARGS_MASK_BANK         0xF0000000
+#define SOUNDARGS_MASK_SOUNDID      0x00FF0000
+#define SOUNDARGS_MASK_PRIORITY     0x0000FF00
+#define SOUNDARGS_MASK_STATUS       0x0000000F
+
+#define SOUNDARGS_SHIFT_BANK        28
+#define SOUNDARGS_SHIFT_SOUNDID     16
+#define SOUNDARGS_SHIFT_PRIORITY    8
+
+/* Sound banks */
+enum SoundBank {
+    SOUND_BANK_ACTION,
+    SOUND_BANK_MOVING,
+    SOUND_BANK_VOICE,
+    SOUND_BANK_GENERAL,
+    SOUND_BANK_ENV,
+    SOUND_BANK_OBJ,
+    SOUND_BANK_AIR,
+    SOUND_BANK_MENU,
+    SOUND_BANK_GENERAL2,
+    SOUND_BANK_OBJ2,
+    SOUND_BANK_CUSTOM_FOREGROUND_1,
+    SOUND_BANK_CUSTOM_FOREGROUND_2,
+    SOUND_BANK_CUSTOM_FOREGROUND_3,
+    SOUND_BANK_CUSTOM_BACKGROUND_1,
+    SOUND_BANK_CUSTOM_BACKGROUND_2,
+    SOUND_BANK_CUSTOM_BACKGROUND_3,
+
+    SOUND_BANK_COUNT
+};
+
+// Bank slots are playback groups; sample/instrument banks are separate.
+// Existing sound-name prefixes remain stable even when their playback group changes.
+#define SOUND_BANK_HEALTH SOUND_BANK_CUSTOM_FOREGROUND_1     // A: health warning pulses
+#define SOUND_BANK_COINS SOUND_BANK_CUSTOM_FOREGROUND_2      // B: coin collection
+#define SOUND_BANK_REWARDS SOUND_BANK_CUSTOM_FOREGROUND_3    // C: rewards and progress
+#define SOUND_BANK_IMPACTS SOUND_BANK_CUSTOM_BACKGROUND_1    // D: destruction and heavy impacts
+#define SOUND_BANK_MECHANISMS SOUND_BANK_CUSTOM_BACKGROUND_2 // E: machinery and timers
+#define SOUND_BANK_DETAILS SOUND_BANK_CUSTOM_BACKGROUND_3    // F: bubbles, birds, coin bounces
+
+#define SOUND_BANKS_ALL_BITS 0xffff
+#define SOUND_BANKS_ALL ((1 << SOUND_BANK_COUNT) - 1)
+
+#define SOUND_BANKS_FOREGROUND (\
+    (1 << SOUND_BANK_ACTION) |\
+    (1 << SOUND_BANK_VOICE) |\
+    (1 << SOUND_BANK_MENU) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_1) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_2) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_3))
+
+#define SOUND_BANKS_BACKGROUND (SOUND_BANKS_ALL & ~SOUND_BANKS_FOREGROUND)
+#define SOUND_BANKS_DISABLED_DURING_INTRO_CUTSCENE                                                     \
+    ((1 << SOUND_BANK_ENV) | (1 << SOUND_BANK_OBJ) | (1 << SOUND_BANK_GENERAL2)                        \
+     | (1 << SOUND_BANK_OBJ2) | (1 << SOUND_BANK_IMPACTS) | (1 << SOUND_BANK_MECHANISMS)               \
+     | (1 << SOUND_BANK_DETAILS))
+#define SOUND_BANKS_DISABLED_AFTER_CREDITS                                                             \
+    ((1 << SOUND_BANK_ACTION) | (1 << SOUND_BANK_MOVING) | (1 << SOUND_BANK_VOICE)                     \
+     | (1 << SOUND_BANK_GENERAL) | (1 << SOUND_BANK_COINS) | (1 << SOUND_BANK_REWARDS)                 \
+     | (1 << SOUND_BANK_IMPACTS))
+
+/* Audio playback bitflags. */
+#define SOUND_NO_VOLUME_LOSS        0x1000000 // No volume loss with distance
+#define SOUND_VIBRATO               0x2000000 // Randomly alter frequency each audio frame
+#define SOUND_NO_PRIORITY_LOSS      0x4000000 // Do not prioritize closer sounds
+#define SOUND_CONSTANT_FREQUENCY    0x8000000 // Frequency is not affected by distance or speed. If
+                                              // not set, frequency will increase with distance.
+                                              // For sounds in SOUND_BANK_MOVING, frequency will
+                                              // further increase with speed, and volume will
+                                              // decrease at slow speeds.
+
+/* Audio lower bitflags. */
+#define SOUND_LOWER_BACKGROUND_MUSIC  0x10 // Lower volume of background music while playing
+#define SOUND_NO_ECHO                 0x20 // Disable level reverb. Not in JP
+#define SOUND_MENU_STYLE 0x40              // Retain menu volume/panning/frequency on a gameplay bank.
+#define SOUND_DISCRETE                0x80 // Every call to play_sound restarts the sound. If not
+                                           // set, the sound is continuous and play_sound should be
+                                           // called at least every other frame to keep it playing
+
+/* Audio Status */
+#define SOUND_STATUS_STOPPED        0
+#define SOUND_STATUS_WAITING        1
+#define SOUND_STATUS_PLAYING        2
+
+/**
+ * Terrain types. mario_get_terrain_sound_addend computes a
+ * sound terrain type between 0 and 7, depending on the terrain type of the
+ * level and the floor type that Mario is standing on. That value is then added
+ * to the sound ID for the TERRAIN_* sounds.
+ */
+#define SOUND_TERRAIN_DEFAULT   0 // e.g. air
+#define SOUND_TERRAIN_GRASS     1
+#define SOUND_TERRAIN_WATER     2
+#define SOUND_TERRAIN_STONE     3
+#define SOUND_TERRAIN_SPOOKY    4 // squeaky floor
+#define SOUND_TERRAIN_SNOW      5
+#define SOUND_TERRAIN_ICE       6
+#define SOUND_TERRAIN_SAND      7
+
+// silence
+#define NO_SOUND 0x00000000
+
+/**
+ * The table below defines all sounds that exist in the game, and which flags
+ * they are used with. If a sound is used with multiple sets of flags (e.g.
+ * different priorities), they are gives distinguishing suffixes.
+ * A _2 suffix means the sound is the same despite a different sound ID.
+ */
+
+/* Terrain sounds */
+// Terrain-dependent moving sounds; a value 0-7 is added to the sound ID before
+// playing. See higher up for the different terrain types.
+#define SOUND_ACTION_TERRAIN_JUMP                /* 0x04008081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x00, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_LANDING             /* 0x04088081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x08, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_STEP                /* 0x06108081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x10, 0x80, SOUND_VIBRATO | SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_BODY_HIT_GROUND     /* 0x04188081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_STEP_TIPTOE         /* 0x06208081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x20, 0x80, SOUND_VIBRATO | SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_STUCK_IN_GROUND     /* 0x04488081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x48, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_TERRAIN_HEAVY_LANDING       /* 0x04608081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x60, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+#define SOUND_ACTION_METAL_JUMP                  /* 0x04289081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x28, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_LANDING               /* 0x04299081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x29, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_STEP                  /* 0x042A9081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2A, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_HEAVY_LANDING         /* 0x042B9081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2B, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_CLAP_HANDS_COLD             /* 0x062C0081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2C, 0x00, SOUND_VIBRATO | SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_HE_THICC_CLAP /* 0xF486A081 */                                                           \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x86, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_HE_THICC_RUNNING_STEP                                                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x87, 0x50, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_HE_THICC_BOUNCE                                                                          \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x88, 0x70, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_HANGING_STEP                /* 0x042DA081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2D, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_QUICKSAND_STEP              /* 0x042E0081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2E, 0x00, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_STEP_TIPTOE           /* 0x042F9081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x2F, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+// Entry splash has its own channel beside swimming, plunge strokes and twirls.
+#define SOUND_ACTION_WATER_PLUNGE                                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x8A, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SWIM_SURFACE                /* 0x04316081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x31, 0x60, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_WATER_JUMP /* 0xF4848081 */                                                       \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x84, 0x80,                                                     \
+                   SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_SWIM                                   /* 0x0433C081 */                           \
+    SOUND_ARG_LOAD(SOUND_BANK_ACTION, 0x33, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SWIM_OVER_PLUNGE /* 0xF4858081 */                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x85, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_FLUTTER_KICK /* 0x0434C081 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_ACTION, 0x34, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_THROW                       /* 0x04358081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x35, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_KEY_SWISH                   /* 0x04368081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x36, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SPIN                        /* 0x04378081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x37, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+// Separate playback group lets twirls overlap swimming and other movement effects.
+#define SOUND_ACTION_TWIRL /* 0x84898081 */                                                            \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x89, 0x80,                                                    \
+                   SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // same sound as spin
+#define SOUND_ACTION_CLIMB_UP_TREE               /* 0x043A8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3A, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_CLIMB_DOWN_TREE             /* 0x003B0001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3B, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_UNK3C                       /* 0x003C0001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3C, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_TAKE_OFF_CAP                /* 0x043D8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3D, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_PUT_ON_CAP                  /* 0x043E8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3E, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_PAT_BACK                    /* 0x043F8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x3F, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_BRUSH_HAIR                  /* 0x04408081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x40, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_CLIMB_UP_POLE               /* 0x04418081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x41, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_METAL_BONK                  /* 0x04428081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x42, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_UNSTUCK_FROM_GROUND         /* 0x04438081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x43, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_HIT                         /* 0x0444C081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x44, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_HIT_2                       /* 0x0444B081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x44, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_HIT_3                       /* 0x0444A081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x44, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_BONK                        /* 0x0445A081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x45, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SHRINK_INTO_BBH             /* 0x0446A081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x46, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SWIM_FAST /* 0x0447C081 */                                                        \
+    SOUND_ARG_LOAD(SOUND_BANK_ACTION, 0x47, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_JUMP_WATER            /* 0x04509081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x50, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_LAND_WATER            /* 0x04519081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x51, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_METAL_STEP_WATER            /* 0x04529081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x52, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_UNK53                       /* 0x00530001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x53, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_UNK54                       /* 0x00540001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x54, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_UNK55                       /* 0x00550001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x55, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_FLYING_FAST                 /* 0x04568081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x56, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // "swoop"?, unverified
+#define SOUND_ACTION_TELEPORT                    /* 0x0457C081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x57, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_SNUFFIT_BULLET_HIT_METAL    /* 0x0458A081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x58, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_BOUNCE_OFF_OBJECT           /* 0x0459B081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x59, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_SIDE_FLIP_UNK               /* 0x045A8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5A, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_READ_SIGN                   /* 0x045BFF81 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5B, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_ACTION_KEY_UNKNOWN45C              /* 0x045C8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5C, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_UNK5D                       /* 0x005D0001 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5D, 0x00, 0) // unverified, unused
+#define SOUND_ACTION_INTRO_UNK45E                /* 0x045E8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5E, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_ACTION_INTRO_UNK45F                /* 0x045F8081 */ SOUND_ARG_LOAD(SOUND_BANK_ACTION,   0x5F, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+
+/* Moving Sound Effects */
+
+// Terrain-dependent moving sounds; a value 0-7 is added to the sound ID before
+// playing. See higher up for the different terrain types.
+#define SOUND_MOVING_TERRAIN_SLIDE               /* 0x14000001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x00, 0x00, SOUND_NO_PRIORITY_LOSS)
+#define SOUND_MOVING_TERRAIN_RIDING_SHELL        /* 0x14200001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x20, 0x00, SOUND_NO_PRIORITY_LOSS)
+
+#define SOUND_MOVING_LAVA_BURN                   /* 0x14100001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x10, 0x00, SOUND_NO_PRIORITY_LOSS) // ?
+#define SOUND_MOVING_SLIDE_DOWN_POLE             /* 0x14110001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x11, 0x00, SOUND_NO_PRIORITY_LOSS) // ?
+#define SOUND_MOVING_SLIDE_DOWN_TREE             /* 0x14128001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x12, 0x80, SOUND_NO_PRIORITY_LOSS)
+#define SOUND_MOVING_QUICKSAND_DEATH             /* 0x14140001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x14, 0x00, SOUND_NO_PRIORITY_LOSS)
+#define SOUND_MOVING_SHOCKED                     /* 0x14160001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x16, 0x00, SOUND_NO_PRIORITY_LOSS)
+#define SOUND_MOVING_FLYING                      /* 0x14170001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x17, 0x00, SOUND_NO_PRIORITY_LOSS)
+#define SOUND_MOVING_ALMOST_DROWNING             /* 0x1C180001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x18, 0x00, SOUND_NO_PRIORITY_LOSS | SOUND_CONSTANT_FREQUENCY)
+#define SOUND_MOVING_AIM_CANNON                  /* 0x1D192001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x19, 0x20, SOUND_NO_VOLUME_LOSS | SOUND_NO_PRIORITY_LOSS | SOUND_CONSTANT_FREQUENCY)
+#define SOUND_MOVING_UNK1A                       /* 0x101A0001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x1A, 0x00, 0) // ?, unused
+#define SOUND_MOVING_RIDING_SHELL_LAVA           /* 0x14280001 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x28, 0x00, SOUND_NO_PRIORITY_LOSS)
+
+/* Mario Sound Effects */
+// A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
+#define SOUND_MARIO_YAH_WAH_HOO                  /* 0x24008081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x00, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_HOOHOO                       /* 0x24038081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_YAHOO                        /* 0x24048081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x04, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_UH                           /* 0x24058081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x05, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_HRMM                         /* 0x24068081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x06, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_WAH2                         /* 0x24078081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x07, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_WHOA                         /* 0x24088081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x08, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_EEUH                         /* 0x24098081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x09, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_ATTACKED                     /* 0x240AFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0A, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_OOOF                         /* 0x240B8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0B, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_OOOF2                        /* 0x240BD081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0B, 0xD0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_HERE_WE_GO                   /* 0x240C8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0C, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_YAWNING                      /* 0x240D8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0D, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_SNORING1                     /* 0x240E8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0E, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_SNORING2                     /* 0x240F8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x0F, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_WAAAOOOW                     /* 0x2410C081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x10, 0xC0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_HAHA                         /* 0x24118081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x11, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_HAHA_WATER                   /* 0x2411F081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x11, 0xF0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_UH_LEDGE_CLIMB_FAST          /* 0x2413D081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x13, 0xD0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_UH_LONG_JUMP_LAND            /* 0x24138081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x13, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_ON_FIRE                      /* 0x2414A081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x14, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_DYING                        /* 0x2415FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x15, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_MARIO_PANTING_COLD                 /* 0x24168081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x16, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+// A random number 0-2 is added to the sound ID before playing
+#define SOUND_MARIO_PANTING                      /* 0x24188081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+#define SOUND_MARIO_COUGHING1                    /* 0x241B8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1B, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_COUGHING2                    /* 0x241C8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1C, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_COUGHING3                    /* 0x241D8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1D, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_PUNCH_YAH                    /* 0x241E8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1E, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_PUNCH_HOO                    /* 0x241F8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1F, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_MAMA_MIA                     /* 0x24208081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x20, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_OKEY_DOKEY                   /* 0x20210001 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x21, 0x00, 0) // unused
+#define SOUND_MARIO_GROUND_POUND_WAH             /* 0x24228081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x22, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_DROWNING                     /* 0x2423F081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x23, 0xF0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_PUNCH_WAH                    /* 0x24248081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x24, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+/* Mario Sound Effects (US/EU only) */
+#define SOUND_PEACH_DEAR_MARIO                   /* 0x2428FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x28, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+// A random number 0-4 is added to the sound ID before playing, producing one of
+// Yahoo! (60% chance), Waha! (20%), or Yippee! (20%).
+#define SOUND_MARIO_YAHOO_WAHA_YIPPEE            /* 0x242B8081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x2B, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+#define SOUND_MARIO_DOH                          /* 0x24308081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x30, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_GAME_OVER                    /* 0x2431FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x31, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_HELLO                        /* 0x2432FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x32, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_PRESS_START_TO_PLAY          /* 0x2433FFA1 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x33, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_NO_ECHO | SOUND_DISCRETE)
+#define SOUND_MARIO_TWIRL_BOUNCE                 /* 0x24348081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x34, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_SNORING3                     /* 0x2435FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x35, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_SO_LONGA_BOWSER              /* 0x24368081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x36, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_MARIO_IMA_TIRED                    /* 0x24378081 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x37, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+/* Princess Peach Sound Effects (US/EU only) */
+#define SOUND_PEACH_MARIO                        /* 0x2438FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x38, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_POWER_OF_THE_STARS           /* 0x2439FF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x39, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_THANKS_TO_YOU                /* 0x243AFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3A, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_THANK_YOU_MARIO              /* 0x243BFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3B, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_SOMETHING_SPECIAL            /* 0x243CFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3C, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_BAKE_A_CAKE                  /* 0x243DFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3D, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_FOR_MARIO                    /* 0x243EFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3E, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_PEACH_MARIO2                       /* 0x243FFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3F, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+/* General Sound Effects */
+#define SOUND_GENERAL_ACTIVATE_CAP_SWITCH        /* 0x30008081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x00, 0x80, SOUND_DISCRETE)
+#define SOUND_GENERAL_FLAME_OUT                                    /* 0xF0038081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x03, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_OPEN_WOOD_DOOR             /* 0x3004C081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x04, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CLOSE_WOOD_DOOR            /* 0x3005C081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x05, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_OPEN_IRON_DOOR             /* 0x3006C081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x06, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CLOSE_IRON_DOOR            /* 0x3007C081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x07, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BUBBLES                                      /* 0xF0080001 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x08, 0x00, 0)              // unverified, unused
+#define SOUND_GENERAL_MOVING_WATER                                 /* 0xF0090081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x09, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_WING_FLAP                                    /* 0xF00A0081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x0A, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_QUIET_BUBBLE                                 /* 0xF00B0081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x0B, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_VOLCANO_EXPLOSION                            /* 0xD00C8081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x0C, 0x80, SOUND_DISCRETE)
+#define SOUND_GENERAL_QUIET_BUBBLE2                                /* 0xF00D0081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x0D, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CASTLE_TRAP_OPEN           /* 0x300E8081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x0E, 0x80, SOUND_DISCRETE)
+#define SOUND_GENERAL_WALL_EXPLOSION /* 0xD00F0081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x0F, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_COIN /* 0xB811D081 */                                                            \
+    SOUND_ARG_LOAD(SOUND_BANK_COINS, 0x11, 0xD0,                                                       \
+                   SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_COIN_WATER                              /* 0xB812D081 */                         \
+    SOUND_ARG_LOAD(SOUND_BANK_COINS, 0x12, 0xD0,                                                       \
+                   SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_SHORT_STAR                              /* 0xC0160091 */                         \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x16, 0x00,                                                     \
+                   SOUND_LOWER_BACKGROUND_MUSIC | SOUND_DISCRETE)     // unverified
+#define SOUND_GENERAL_BIG_CLOCK                                       /* 0xE0170081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x17, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_LOUD_POUND                                      /* 0xD0180001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x18, 0x00, 0)                 // _TERRAIN?, unverified, unused
+#define SOUND_GENERAL_LOUD_POUND2                                     /* 0xD0190001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x19, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND1                                    /* 0xD01A0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1A, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND2                                    /* 0xD01B0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1B, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND3                                    /* 0xD01C0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1C, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND4                                    /* 0xD01D0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1D, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND5                                    /* 0xD01E0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1E, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_SHORT_POUND6                                    /* 0xD01F0001 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x1F, 0x00, 0)                 // unverified, unused
+#define SOUND_GENERAL_OPEN_CHEST                 /* 0x31208081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x20, 0x80, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_GENERAL_OPEN_CHEST_WATER           /* 0x31228081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x22, 0x80, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BOX_LANDING_UNUSED                                           /* 0xD0240081 */    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x24, 0x00, SOUND_DISCRETE)                 // unverified
+#define SOUND_GENERAL_SMALL_BOX_LANDING                                            /* 0xD2240081 */    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x24, 0x00, SOUND_VIBRATO | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_UNKNOWN1                   /* 0x30250081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x25, 0x00, SOUND_DISCRETE) // unverified, unused
+#define SOUND_GENERAL_ROLLING_LOG                                                   /* 0x82250081 */   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x25, 0x00, SOUND_VIBRATO | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CLAM_SHELL_OPEN            /* 0x30264081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x26, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CLAM_SHELL_CLOSE           /* 0x30274081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x27, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_PAINTING_EJECT             /* 0x39280081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x28, 0x00, SOUND_NO_VOLUME_LOSS | SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE)
+#define SOUND_GENERAL_LEVEL_SELECT_CHANGE        /* 0x302B0081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x2B, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_PLATFORM                                      /* 0x802D8081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x2D, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_DONUT_PLATFORM_EXPLOSION                      /* 0xD02E2081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x2E, 0x20, SOUND_DISCRETE)
+#define SOUND_GENERAL_BOWSER_BOMB_EXPLOSION                                                            \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x2F, 0xB0,                                                     \
+                   SOUND_NO_PRIORITY_LOSS | SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_GENERAL_COIN_SPURT /* 0xF8300081 */                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x30, 0x00,                                                     \
+                   SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_EXPLOSION6                              /* 0xD0310001 */                         \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x31, 0x00, 0)         // unverified, unused
+#define SOUND_GENERAL_UNK32                      /* 0x30320001 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x32, 0x00, 0) // unverified, unused
+#define SOUND_GENERAL_DRAWBRIDGE_LOWER           /* 0x30344081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x34, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_DRAWBRIDGE_RAISE           /* 0x30354081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x35, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_COIN_DROP                                    /* 0xF0364081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x36, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BOWSER_KEY_LAND            /* 0x38378081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x37, 0x80, SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_PENDULUM_SWING /* 0xE0380081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x38, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_CHAIN_CHOMP1                             /* 0x50800081 */                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x80, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CHAIN_CHOMP2                             /* 0x50810081 */                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x81, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_DOOR_TURN_KEY              /* 0x303B0081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x3B, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_MOVING_IN_SAND                                  /* 0x803C0081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x3C, 0x00, SOUND_DISCRETE)   // unverified
+#define SOUND_GENERAL_ELEVATOR_WOBBLE_LOWPRIO                         /* 0xE03D0081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x3D, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_KICKABLE_BOARD_FALL                             /* 0xD03D8081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x3D, 0x80, SOUND_DISCRETE)    // unverified
+#define SOUND_GENERAL_MOVING_PLATFORM_SWITCH     /* 0x303E0081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x3E, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_CAGE_OPEN                  /* 0x303FA081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x3F, 0xA0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_QUIET_POUND1_LOWPRIO                         /* 0xD0400081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x40, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_QUIET_POUND1                                 /* 0xD0404081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x40, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BREAK_BOX                                    /* 0xD041C081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x41, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_DOOR_INSERT_KEY            /* 0x30420081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x42, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL_VOLCANO_TRAP_FALL                             /* 0xD0430081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x43, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_BIG_POUND                                     /* 0xD0440081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x44, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_VOLCANO_TRAP_RISE                             /* 0x80450081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x45, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_TOX_BOX_MOVE                                  /* 0x80468081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x46, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CANNON_UP                  /* 0x30478081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x47, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_GRINDEL_ROLL                                  /* 0x80480081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x48, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_EXPLOSION7                                    /* 0xD0490001 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x49, 0x00, 0)               // unverified, unused
+#define SOUND_GENERAL_SHAKE_COFFIN                                  /* 0x804A0001 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x4A, 0x00, 0)              // unverified, unused
+#define SOUND_GENERAL_RACE_GUN_SHOT                                 /* 0xC14D4081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x4D, 0x40, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_STAR_DOOR_OPEN             /* 0x304EC081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x4E, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_STAR_DOOR_CLOSE            /* 0x304FC081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x4F, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_POUND_ROCK                                   /* 0xD0560081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x56, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_STAR_APPEARS                                 /* 0xC057FF91 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x57, 0xFF,                                                     \
+                   SOUND_LOWER_BACKGROUND_MUSIC | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_COLLECT_1UP                                 /* 0xC058FF81 */                     \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x58, 0xFF, SOUND_DISCRETE)
+#define SOUND_GENERAL_BUTTON_PRESS_LOWPRIO       /* 0x305A0081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x5A, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BUTTON_PRESS               /* 0x305A4081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x5A, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BUTTON_PRESS_2_LOWPRIO     /* 0x315A0081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x5A, 0x00, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BUTTON_PRESS_2             /* 0x315A4081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x5A, 0x40, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_ELEVATOR_MOVE                                   /* 0xE05B0081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x5B, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_ELEVATOR_MOVE_2                                 /* 0xE15B0081 */                 \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x5B, 0x00,                                                  \
+                   SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)          // unverified
+#define SOUND_GENERAL_SWISH_AIR_UNUSED                             /* 0xF05C0081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x5C, 0x00, SOUND_DISCRETE) // unverified, unused
+#define SOUND_GENERAL_HAUNTED_CHAIR_SWISH_AIR                      /* 0xF15C0081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x5C, 0x00, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_HAUNTED_CHAIR_SPIN                            /* 0x805D0081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x5D, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BOO_CAGE_SOFT_LANDING                         /* 0xD05E0081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x5E, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_HAUNTED_CHAIR_FALL                            /* 0xD05F0081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x5F, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_BOWSER_PLATFORM_UNUSED                        /* 0xD0628081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x62, 0x80, SOUND_DISCRETE)  // unverified, unused
+#define SOUND_GENERAL_BOWSER_PLATFORM_FALL                          /* 0xD1628081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x62, 0x80, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_HEART_SPIN                                    /* 0x8064C081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x64, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_POUND_WOOD_POST                               /* 0xD065C081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x65, 0xC0, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_WATER_LEVEL_TRIG           /* 0x30668081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x66, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_SWITCH_DOOR_OPEN           /* 0x3067A081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x67, 0xA0, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_RED_COIN                                     /* 0xB068D081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_COINS, 0x68, 0xD0, SOUND_DISCRETE)   // unverified
+#define SOUND_GENERAL_BIRDS_FLY_AWAY                               /* 0xF0690081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x69, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_ELEVATOR_LAND                                /* 0xD06B8081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x6B, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_CRAZY_BOX_BOING_SLOW                         /* 0x50824081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x82, 0x40, SOUND_DISCRETE)     // unverified
+#define SOUND_GENERAL_MONEYBAG_BOING_LOWPRIO                       /* 0x50832081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x83, 0x20, SOUND_DISCRETE)     // unverified
+#define SOUND_GENERAL_CRAZY_BOX_BOING_FAST                         /* 0x50834081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x83, 0x40, SOUND_DISCRETE)     // unverified
+#define SOUND_GENERAL_YOSHI_WALK                                   /* 0x50842081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x84, 0x20, SOUND_DISCRETE)     // unverified
+#define SOUND_GENERAL_ENEMY_ALERT1                                 /* 0x90853081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x85, 0x30, SOUND_DISCRETE)    // unverified
+#define SOUND_GENERAL_YOSHI_TALK                                   /* 0x90863081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x86, 0x30, SOUND_DISCRETE)    // unverified
+#define SOUND_GENERAL_SPLATTERING                                  /* 0xF0713081 */                    \
+    SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x71, 0x30, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_BOING3_UNUSED              /* 0x30720001 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x72, 0x00, 0) // unverified, unused
+#define SOUND_GENERAL_GRAND_STAR                                    /* 0xC0730081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x73, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_GRAND_STAR_JUMP                               /* 0xC0740081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x74, 0x00, SOUND_DISCRETE)  // unverified
+#define SOUND_GENERAL_BOAT_ROCK                                     /* 0x80750081 */                   \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x75, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_GENERAL_VANISH_SFX                 /* 0x30762081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x76, 0x20, SOUND_DISCRETE) // unverified
+
+/* Environment Sound Effects */
+#define SOUND_ENV_WATERFALL1                     /* 0x40000001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x00, 0x00, 0) // unverified
+#define SOUND_ENV_WATERFALL2                     /* 0x40010001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x01, 0x00, 0) // unverified
+#define SOUND_ENV_ELEVATOR1                              /* 0xE0020001 */                              \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x02, 0x00, 0) // unverified
+#define SOUND_ENV_DRONING1                       /* 0x41030001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x03, 0x00, SOUND_NO_VOLUME_LOSS) // unverified
+#define SOUND_ENV_DRONING2                       /* 0x40040001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x04, 0x00, 0) // unverified
+#define SOUND_ENV_WIND1                          /* 0x40050001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x05, 0x00, 0) // unverified
+#define SOUND_ENV_MOVING_SAND_SNOW               /* 0x40060001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x06, 0x00, 0) // unverified, unused
+#define SOUND_ENV_UNK07                          /* 0x40070001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x07, 0x00, 0) // unverified, unused
+#define SOUND_ENV_ELEVATOR2                              /* 0xE0080001 */                              \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x08, 0x00, 0) // unverified
+#define SOUND_ENV_WATER                          /* 0x40090001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x09, 0x00, 0) // unverified
+#define SOUND_ENV_BOWLING_BALL_ROLL                                         /* 0x80800001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x80, 0x00, 0)                      // unverified
+#define SOUND_ENV_BOAT_ROCKING1                                             /* 0x80810001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x81, 0x00, 0)                      // unverified
+#define SOUND_ENV_ELEVATOR3                                                 /* 0xE00C0001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x0C, 0x00, 0)                    // unverified
+#define SOUND_ENV_ELEVATOR4                                                 /* 0xE00D0001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x0D, 0x00, 0)                    // unverified
+#define SOUND_ENV_HAUNTED_BOOKSHELF_RECEDE                                  /* 0xE10D0001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x0D, 0x00, SOUND_NO_VOLUME_LOSS) // unverified
+#define SOUND_ENV_MOVINGSAND                     /* 0x400E0001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x0E, 0x00, 0) // unverified
+#define SOUND_ENV_MERRY_GO_ROUND_CREAKING                /* 0xE00F4001 */                              \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x0F, 0x40, 0) // unverified
+#define SOUND_ENV_WIND2                          /* 0x40108001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x10, 0x80, 0) // unverified
+#define SOUND_ENV_UNK12                          /* 0x40120001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x12, 0x00, 0) // unverified, unused
+#define SOUND_ENV_SLIDING                              /* 0x80820001 */                                \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x82, 0x00, 0) // unverified
+#define SOUND_ENV_STAR                           /* 0x40140011 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x14, 0x00, SOUND_LOWER_BACKGROUND_MUSIC) // unverified
+#define SOUND_ENV_MOVING_BIG_PLATFORM                                       /* 0xE1150001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x15, 0x00, SOUND_NO_VOLUME_LOSS) // unverified
+#define SOUND_ENV_WATER_DRAIN                                               /* 0xE1160001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x16, 0x00, SOUND_NO_VOLUME_LOSS) // unverified
+#define SOUND_ENV_METAL_BOX_PUSH                                            /* 0x80838001 */           \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x83, 0x80, 0)                      // unverified
+#define SOUND_ENV_SINK_QUICKSAND                 /* 0x40188001 */ SOUND_ARG_LOAD(SOUND_BANK_ENV,      0x18, 0x80, 0) // unverified
+
+/* Object Sound Effects */
+#define SOUND_OBJ_SUSHI_SHARK_WATER_SOUND        /* 0x50008081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x00, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_MRI_SHOOT                      /* 0x50010081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x01, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_BABY_PENGUIN_WALK              /* 0x50020081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x02, 0x00, SOUND_DISCRETE)
+// Keep boss footsteps above wave enemies, and his vocal/action cues above footsteps.
+// Priority protection preserves normal distance-based volume attenuation.
+#define SOUND_OBJ_BOWSER_WALK                                                                          \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BOWSER_TAIL_PICKUP                                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x05, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BOWSER_DEFEATED                                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x06, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BOWSER_SPINNING                                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x07, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BOWSER_INHALING                                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x08, 0x90, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BIG_PENGUIN_WALK               /* 0x50098081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x09, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_BOO_BOUNCE_TOP                 /* 0x500A0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x0A, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_BOO_LAUGH_SHORT /* 0x900B0081 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x0B, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_THWOMP                         /* 0x500CA081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x0C, 0xA0, SOUND_DISCRETE)
+#define SOUND_OBJ_CANNON_RISE                    /* 0x500DF081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x0D, 0xF0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_CANNON_TURN                    /* 0x500EF081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x0E, 0xF0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_CANNON_BARREL_PITCH            /* 0x500FF081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x0F, 0xF0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_JUMP_WALK_WATER                /* 0x50120001 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x12, 0x00, 0) // unverified, unused
+#define SOUND_OBJ_BOMP_SLIDE                     /* 0x50130081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x13, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_MRI_DEATH /* 0x90140081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x14, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_POUNDING1                      /* 0x50155081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x15, 0x50, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_KING_BOBOMB_POUNDING1_HIGHPRIO /* 0x50158081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x15, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_WHOMP                          /* 0x50166081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x16, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ_KING_BOBOMB                    /* 0x50168081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x16, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_BULLY_METAL                    /* 0x50178081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x17, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_BULLY_EXPLODE_UNUSED                          /* 0x9018A081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x18, 0xA0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_BULLY_EXPLODE_LAVA                            /* 0x9118A081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x18, 0xA0, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_POUNDING_CANNON                /* 0x501A5081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x1A, 0x50, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_BULLY_WALK_SMALL               /* 0x501B3081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x1B, 0x30, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_GRAB_MARIO                     /* 0x501D8081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x1D, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_RELEASE_MARIO                  /* 0x501EA081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x1E, 0xA0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_BABY_PENGUIN_DIVE              /* 0x501F4081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x1F, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_GOOMBA_WALK                    /* 0x50200081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x20, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_UKIKI_CHATTER_LONG /* 0x90210081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x21, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_MONTY_MOLE_ATTACK              /* 0x50220081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x22, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_EVIL_LAKITU_THROW              /* 0x50222081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x22, 0x20, SOUND_DISCRETE)
+#define SOUND_OBJ_UNK23                          /* 0x50230001 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x23, 0x00, 0) // unverified, unused
+#define SOUND_OBJ_DYING_ENEMY1 /* 0x90244081 */                                                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x24, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_WATER_BOMB_CANNON              /* 0x50254081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x25, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_DYING_ENEMY2                     /* 0x90260001 */                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x26, 0x00, 0) // unverified, unused
+#define SOUND_OBJ_BOBOMB_WALK                    /* 0x50270081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x27, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_SOMETHING_LANDING              /* 0x50288081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x28, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_DIVING_IN_WATER                /* 0x5029A081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x29, 0xA0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_SNOW_SAND1                     /* 0x502A0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x2A, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_SNOW_SAND2                     /* 0x502B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x2B, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_DEFAULT_DEATH /* 0x902C8081 */                                                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x2C, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_BIG_PENGUIN_YELL /* 0x902D0081 */                                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x2D, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_WATER_BOMB_BOUNCING            /* 0x502E8081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x2E, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_GOOMBA_ALERT /* 0x902F0081 */                                                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x2F, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_WIGGLER_JUMP                   /* 0x502F6081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x2F, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ_STOMPED                                       /* 0x90308081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x30, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_SWOOP_FLAP                     /* 0x50310081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x31, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_DIVING_INTO_WATER              /* 0x50324081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x32, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_PIRANHA_PLANT_SHRINK           /* 0x50334081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x33, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_KOOPA_THE_QUICK_WALK           /* 0x50342081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x34, 0x20, SOUND_DISCRETE)
+#define SOUND_OBJ_KOOPA_WALK                     /* 0x50350081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x35, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_BULLY_WALK_LARGE               /* 0x50366081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x36, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ_DORRIE /* 0x90376081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x37, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ_BOWSER_LAUGH                                                                         \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x38, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_UKIKI_CHATTER_SHORT /* 0x90390081 */                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x39, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_UKIKI_CHATTER_IDLE /* 0x903A0081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x3A, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_UKIKI_STEP_DEFAULT             /* 0x503B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x3B, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_UKIKI_STEP_LEAVES              /* 0x503C0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x3C, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_KOOPA_TALK /* 0x903DA081 */                                                          \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x3D, 0xA0, SOUND_DISCRETE)
+#define SOUND_OBJ_KOOPA_DAMAGE /* 0x903EA081 */                                                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x3E, 0xA0, SOUND_DISCRETE)
+#define SOUND_OBJ_KLEPTO_TURN                    /* 0x503F4081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x3F, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_KLEPTO_ATTACKED                               /* 0x90406081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x40, 0x60, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_KING_BOBOMB_TALK                              /* 0x90410081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x41, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_KING_BOBOMB_JUMP               /* 0x50468081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x46, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_KING_WHOMP_DEATH /* 0x9147C081 */                                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x47, 0xC0, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_BOO_LAUGH_LONG /* 0x90480081 */                                                      \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x48, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_EEL_UNUSED                     /* 0x504A0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4A, 0x00, SOUND_DISCRETE) // unverified, unused
+#define SOUND_OBJ_EEL_EXIT_CAVE                  /* 0x524A0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4A, 0x00, SOUND_VIBRATO | SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_EYEROK_SHOW_EYE                /* 0x524B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4B, 0x00, SOUND_VIBRATO | SOUND_DISCRETE)
+#define SOUND_OBJ_MR_BLIZZARD_ALERT /* 0x904C0081 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x4C, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_SNUFIT_SHOOT                   /* 0x504D0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4D, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_SKEETER_WALK                   /* 0x504E0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4E, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_WALKING_WATER                  /* 0x504F0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x4F, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_BIRD_CHIRP3 /* 0xF0514001 */ SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x51, 0x40, 0)
+#define SOUND_OBJ_PIRANHA_PLANT_APPEAR           /* 0x50542081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x54, 0x20, SOUND_DISCRETE)
+#define SOUND_OBJ_FLAME_BLOWN                    /* 0x50558081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x55, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ_MAD_PIANO_CHOMPING             /* 0x52564081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x56, 0x40, SOUND_VIBRATO | SOUND_DISCRETE)
+#define SOUND_OBJ_BOBOMB_BUDDY_TALK /* 0x90584081 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x58, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_SPINY_LAND                     /* 0x50591081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x59, 0x10, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_WIGGLER_HIGH_PITCH /* 0x905C4081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x5C, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_HEAVEHO_TOSSED                 /* 0x505D4081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x5D, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_WIGGLER_DEATH                    /* 0x905E0001 */                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x5E, 0x00, 0) // unverified, unused
+#define SOUND_OBJ_BOWSER_INTRO_LAUGH                                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x5F, 0xB0,                                                        \
+                   SOUND_NO_PRIORITY_LOSS | SOUND_LOWER_BACKGROUND_MUSIC | SOUND_DISCRETE)
+#define SOUND_OBJ_ENEMY_DEATH_HIGH                              /* 0x9060B081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x60, 0xB0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_ENEMY_DEATH_LOW                               /* 0x9061B081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x61, 0xB0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_SWOOP_DEATH                                   /* 0x9062B081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x62, 0xB0, SOUND_DISCRETE)
+#define SOUND_OBJ_KOOPA_FLYGUY_DEATH /* 0x9063B081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x63, 0xB0, SOUND_DISCRETE)
+#define SOUND_OBJ_POKEY_DEATH /* 0x9063C081 */                                                         \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x63, 0xC0, SOUND_DISCRETE)
+#define SOUND_OBJ_SNOWMAN_BOUNCE                 /* 0x5064C081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x64, 0xC0, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_SNOWMAN_EXPLODE /* 0x9065D081 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x65, 0xD0, SOUND_DISCRETE)
+#define SOUND_OBJ_POUNDING_LOUD                  /* 0x50684081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x68, 0x40, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_MIPS_RABBIT                                   /* 0x906A0081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x6A, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_MIPS_RABBIT_WATER                             /* 0x906C0081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x6C, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_OBJ_EYEROK_EXPLODE                                /* 0x906D0081 */                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x6D, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_CHUCKYA_DEATH /* 0x916E0081 */                                                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x6E, 0x00, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ_WIGGLER_TALK /* 0x906F0081 */                                                        \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x6F, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ_WIGGLER_ATTACKED /* 0x90706081 */                                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x70, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ_WIGGLER_LOW_PITCH /* 0x90712081 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x71, 0x20, SOUND_DISCRETE)
+#define SOUND_OBJ_SNUFIT_SKEETER_DEATH /* 0x9072C081 */                                                \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x72, 0xC0, SOUND_DISCRETE)
+#define SOUND_OBJ_BUBBA_CHOMP                    /* 0x50734081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ,      0x73, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ_ENEMY_DEFEAT_SHRINK /* 0x90744081 */                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x74, 0x40, SOUND_DISCRETE)
+
+#define SOUND_AIR_BOWSER_SPIT_FIRE                                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_AIR, 0x00, 0x90, SOUND_NO_PRIORITY_LOSS | 0)
+#define SOUND_AIR_UNK01                          /* 0x60010001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x01, 0x00, 0) // ?, unused
+#define SOUND_AIR_LAKITU_FLY                     /* 0x60028001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x02, 0x80, 0)
+#define SOUND_AIR_LAKITU_FLY_HIGHPRIO            /* 0x6002FF01 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x02, 0xFF, 0)
+#define SOUND_AIR_AMP_BUZZ                       /* 0x60034001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x03, 0x40, 0)
+#define SOUND_AIR_BLOW_FIRE                      /* 0x60048001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x04, 0x80, 0)
+#define SOUND_AIR_BLOW_WIND                      /* 0x60044001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x04, 0x40, 0)
+#define SOUND_AIR_ROUGH_SLIDE                    /* 0x60050001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x05, 0x00, 0)
+#define SOUND_AIR_HEAVEHO_MOVE                   /* 0x60064001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x06, 0x40, 0)
+#define SOUND_AIR_UNK07                          /* 0x60070001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x07, 0x00, 0) // ?, unused
+#define SOUND_AIR_BOBOMB_LIT_FUSE                /* 0x60086001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x08, 0x60, 0)
+#define SOUND_AIR_HOWLING_WIND                   /* 0x60098001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x09, 0x80, 0)
+#define SOUND_AIR_CHUCKYA_MOVE                   /* 0x600A4001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x0A, 0x40, 0)
+#define SOUND_AIR_PEACH_TWINKLE                  /* 0x600B4001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x0B, 0x40, 0)
+#define SOUND_AIR_CASTLE_OUTDOORS_AMBIENT        /* 0x60104001 */ SOUND_ARG_LOAD(SOUND_BANK_AIR,      0x10, 0x40, 0)
+
+/* Menu Sound Effects */
+// Pause scrolling shares the coin channel so pause/unpause tones can finish independently.
+#define SOUND_MENU_PAUSE_CHANGE_SELECT                                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_COINS, 0x00, 0xF8, SOUND_MENU_STYLE | SOUND_DISCRETE)
+#define SOUND_MENU_CHANGE_SELECT                 /* 0x7000F881 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x00, 0xF8, SOUND_DISCRETE)
+#define SOUND_MENU_REVERSE_PAUSE                 /* 0x70010001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x01, 0x00, 0) // unverified, unused
+#define SOUND_MENU_PAUSE_UNUSED                  /* 0x7002F081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x02, 0xF0, SOUND_DISCRETE) // unused
+#define SOUND_MENU_PAUSE_OPEN                    /* 0x7002FF81 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x02, 0xFF, SOUND_DISCRETE)
+#define SOUND_MENU_PAUSE_CLOSE                   /* 0x7003FF81 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x03, 0xFF, SOUND_DISCRETE)
+#define SOUND_MENU_MESSAGE_APPEAR                /* 0x70040081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x04, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_MESSAGE_DISAPPEAR             /* 0x70050081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x05, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_CAMERA_ZOOM_IN                /* 0x70060081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x06, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_CAMERA_ZOOM_OUT               /* 0x70070081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x07, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_PINCH_MARIO_FACE              /* 0x70080081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x08, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_LET_GO_MARIO_FACE             /* 0x70090081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x09, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_HAND_APPEAR                   /* 0x700A0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0A, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_HAND_DISAPPEAR                /* 0x700B0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0B, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_UNK0C_FLAG_UNKNOWN1           /* 0x700C0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0C, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_MENU_POWER_METER                   /* 0x700D0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0D, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_MENU_CAMERA_BUZZ                   /* 0x700E0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0E, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_CAMERA_TURN                   /* 0x700F0081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x0F, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_UNK10                         /* 0x70100001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x10, 0x00, 0) // unverified, unused
+#define SOUND_MENU_CLICK_FILE_SELECT             /* 0x70110081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x11, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_MESSAGE_NEXT_PAGE             /* 0x70130081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x13, 0x00, SOUND_DISCRETE) // unverified
+#define SOUND_MENU_COIN_ITS_A_ME_MARIO           /* 0x70140081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x14, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_YOSHI_GAIN_LIVES /* 0xC01500C1 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x15, 0x00, SOUND_DISCRETE | SOUND_MENU_STYLE)
+#define SOUND_MENU_ENTER_PIPE                    /* 0x7016A081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x16, 0xA0, SOUND_DISCRETE)
+#define SOUND_MENU_EXIT_PIPE                     /* 0x7017A081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x17, 0xA0, SOUND_DISCRETE)
+#define SOUND_MENU_BOWSER_LAUGH                  /* 0x70188081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x18, 0x80, SOUND_DISCRETE)
+#define SOUND_MENU_ENTER_HOLE                    /* 0x71198081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x19, 0x80, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_MENU_CLICK_CHANGE_VIEW             /* 0x701A8081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x1A, 0x80, SOUND_DISCRETE) // unverified
+#define SOUND_MENU_CAMERA_UNUSED1                /* 0x701B0001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x1B, 0x00, 0) // unverified, unused
+#define SOUND_MENU_CAMERA_UNUSED2                /* 0x701C0001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x1C, 0x00, 0) // unverified, unused
+#define SOUND_MENU_MARIO_CASTLE_WARP             /* 0x701DB081 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x1D, 0xB0, SOUND_DISCRETE) // unverified
+#define SOUND_MENU_STAR_SOUND /* 0xC01EFFC1 */                                                         \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x1E, 0xFF, SOUND_DISCRETE | SOUND_MENU_STYLE)
+#define SOUND_MENU_THANK_YOU_PLAYING_MY_GAME     /* 0x701FFF81 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x1F, 0xFF, SOUND_DISCRETE)
+#define SOUND_MENU_READ_A_SIGN                   /* 0x70200001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x20, 0x00, 0) // unverified, unused
+#define SOUND_MENU_EXIT_A_SIGN                   /* 0x70210001 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x21, 0x00, 0) // unverified, unused
+#define SOUND_MENU_HIGH_SCORE                                                         /* 0xC02220C1 */ \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x22, 0x20, SOUND_DISCRETE | SOUND_MENU_STYLE) // unverified
+#define SOUND_MENU_STAR_SOUND_OKEY_DOKEY                                              /* 0xC023FFC1 */ \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x23, 0xFF, SOUND_DISCRETE | SOUND_MENU_STYLE)
+#define SOUND_MENU_STAR_SOUND_LETS_A_GO /* 0xC024FFC1 */                                               \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x24, 0xFF, SOUND_DISCRETE | SOUND_MENU_STYLE)
+
+// US/EU only; an index between 0-7 or 0-4 is added to the sound ID before
+// playing, producing the same sound with different pitch.
+#define SOUND_MENU_COLLECT_RED_COIN /* 0xB828D0C1 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_COINS, 0x28, 0xD0,                                                       \
+                   SOUND_CONSTANT_FREQUENCY | SOUND_DISCRETE | SOUND_MENU_STYLE)
+#define SOUND_MENU_COLLECT_SECRET /* 0xC03020C1 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x30, 0x20, SOUND_DISCRETE | SOUND_MENU_STYLE)
+
+// Legacy general-effect names. Playback banks now separate scenery, timers, rewards, and impacts.
+#define SOUND_GENERAL2_BOBOMB_EXPLOSION /* 0xD02E2081 */                                               \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x2E, 0x20, SOUND_DISCRETE)
+#define SOUND_GENERAL2_PURPLE_SWITCH /* 0x303EC081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_GENERAL, 0x3E, 0xC0, SOUND_DISCRETE)
+#define SOUND_GENERAL2_ROTATING_BLOCK_CLICK      /* 0x80400081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x40, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL2_SPINDEL_ROLL              /* 0x80482081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x48, 0x20, SOUND_DISCRETE)
+#define SOUND_GENERAL2_PYRAMID_TOP_SPIN          /* 0x814BE081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x4B, 0xE0, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_GENERAL2_PYRAMID_TOP_EXPLOSION /* 0xD14CF081 */                                          \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x4C, 0xF0, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_GENERAL2_BIRD_CHIRP2 /* 0xF0504001 */ SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x50, 0x40, 0)
+#define SOUND_GENERAL2_SWITCH_TICK_FAST /* 0xE054F011 */                                               \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x54, 0xF0, SOUND_LOWER_BACKGROUND_MUSIC)
+#define SOUND_GENERAL2_SWITCH_TICK_SLOW /* 0xE055F011 */                                               \
+    SOUND_ARG_LOAD(SOUND_BANK_MECHANISMS, 0x55, 0xF0, SOUND_LOWER_BACKGROUND_MUSIC)
+#define SOUND_GENERAL2_STAR_APPEARS /* 0xC057FF91 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x57, 0xFF, SOUND_LOWER_BACKGROUND_MUSIC | SOUND_DISCRETE)
+#define SOUND_GENERAL2_ROTATING_BLOCK_ALERT      /* 0x80590081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL2, 0x59, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL2_BOWSER_EXPLODE /* 0xD0600081 */                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_IMPACTS, 0x60, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL2_BOWSER_KEY /* 0xC0610081 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x61, 0x00, SOUND_DISCRETE)
+#define SOUND_GENERAL2_1UP_APPEAR /* 0xC063D081 */                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x63, 0xD0, SOUND_DISCRETE)
+#define SOUND_GENERAL2_RIGHT_ANSWER /* 0xC06AA081 */                                                   \
+    SOUND_ARG_LOAD(SOUND_BANK_REWARDS, 0x6A, 0xA0, SOUND_DISCRETE)
+
+// Legacy object-effect names. Movement uses bank 5; voices and reactions use bank 9.
+#define SOUND_OBJ2_BOWSER_ROAR                                                                         \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ2, 0x04, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ2_PIRANHA_PLANT_BITE /* 0x50105081 */                                                 \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x10, 0x50, SOUND_DISCRETE)
+#define SOUND_OBJ2_PIRANHA_PLANT_DYING           /* 0x90116081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x11, 0x60, SOUND_DISCRETE)
+#define SOUND_OBJ2_BOWSER_PUZZLE_PIECE_MOVE /* 0x50192081 */                                           \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x19, 0x20, SOUND_DISCRETE)
+#define SOUND_OBJ2_SMALL_BULLY_ATTACKED          /* 0x901C0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x1C, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ2_KING_BOBOMB_DAMAGE            /* 0x91424081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x42, 0x40, SOUND_NO_VOLUME_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ2_SCUTTLEBUG_WALK /* 0x50434081 */                                                    \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x43, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ2_SCUTTLEBUG_ALERT              /* 0x90444081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x44, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ2_BABY_PENGUIN_YELL             /* 0x90450081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x45, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ2_SWOOP_WAKE_UP                 /* 0x90490081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x49, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ2_BIRD_CHIRP1 /* 0xF0524001 */ SOUND_ARG_LOAD(SOUND_BANK_DETAILS, 0x52, 0x40, 0)
+#define SOUND_OBJ2_LARGE_BULLY_ATTACKED          /* 0x90570081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x57, 0x00, SOUND_DISCRETE)
+#define SOUND_OBJ2_EYEROK_SOUND_SHORT            /* 0x935A0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x5A, 0x00, SOUND_NO_VOLUME_LOSS | SOUND_VIBRATO | SOUND_DISCRETE)
+#define SOUND_OBJ2_WHOMP_SOUND_SHORT             /* 0x935AC081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x5A, 0xC0, SOUND_NO_VOLUME_LOSS | SOUND_VIBRATO | SOUND_DISCRETE)
+#define SOUND_OBJ2_EYEROK_SOUND_LONG             /* 0x925B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x5B, 0x00, SOUND_VIBRATO | SOUND_DISCRETE)
+#define SOUND_OBJ2_BOWSER_TELEPORT                                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x66, 0xB0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+#define SOUND_OBJ2_MONTY_MOLE_APPEAR /* 0x50678081 */                                                  \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x67, 0x80, SOUND_DISCRETE)
+#define SOUND_OBJ2_BOSS_DIALOG_GRUNT             /* 0x90694081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x69, 0x40, SOUND_DISCRETE)
+#define SOUND_OBJ2_MRI_SPINNING /* 0x506B0081 */                                                       \
+    SOUND_ARG_LOAD(SOUND_BANK_OBJ, 0x6B, 0x00, SOUND_DISCRETE)
+
+// Add defines for sounds using extra custom banks here!
+#define SOUND_HEALTH_WARNING_PULSE                                                                     \
+    SOUND_ARG_LOAD(SOUND_BANK_HEALTH, 0x00, 0x80,                                                      \
+                   SOUND_NO_VOLUME_LOSS | SOUND_NO_PRIORITY_LOSS | SOUND_CONSTANT_FREQUENCY            \
+                       | SOUND_DISCRETE)
+
+#endif // SOUNDS_H

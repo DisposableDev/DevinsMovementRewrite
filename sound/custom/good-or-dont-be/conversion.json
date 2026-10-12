@@ -1,0 +1,42 @@
+{
+  "midi_sha256": "34c9b539f86bd87f82e2254342527aa2c7ea3cb95a4f7bbe8e57834556fe35a5",
+  "tempo_bpm": 118,
+  "native_repeat_tick": 7296,
+  "native_end_tick": 10368,
+  "intro_seconds": 77.288048,
+  "repeat_seconds": 32.542336,
+  "channels": 7,
+  "tracks": [
+    {
+      "track": "Lead Piano",
+      "instrument": 4,
+      "notes": 199,
+      "voices": 2
+    },
+    {
+      "track": "Accompaniment Piano - slightly clearer",
+      "instrument": 4,
+      "notes": 486,
+      "voices": 6
+    },
+    {
+      "track": "Strings 2 - spacious reverb, clear low mids",
+      "instrument": 7,
+      "notes": 1271,
+      "voices": 7
+    },
+    {
+      "track": "Acoustic Guitar - tightened attacks",
+      "instrument": 8,
+      "notes": 84,
+      "voices": 2
+    },
+    {
+      "track": "Quiet Vibraphone - aligned with guitar",
+      "instrument": 13,
+      "notes": 84,
+      "voices": 2
+    }
+  ],
+  "boundary_crossing_notes": 0
+}

@@ -1,0 +1,93 @@
+{
+  "PEACH": [
+    "Dear Mario...",
+    "You did it! You saved Super Mario 64!",
+    "You really are a Super Player!",
+    "Congratulations!"
+  ],
+  "BOBOMB": [
+    "Hi, Mario!",
+    "Remember all those cannons I opened for you?",
+    "Sure would have been helpful if they were open earlier.",
+    "Enough about me, though.",
+    "Congratulations!"
+  ],
+  "KOOPA": [
+    "Hey there, Mario!",
+    "Even for me, getting here was a challenge.",
+    "It was worth it to see you succeed, though.",
+    "Congratulations!",
+    "Do you know if a bus runs through here?"
+  ],
+  "SIGN": [
+    "Whoa, hey guys.",
+    "Looks like the party's started.",
+    "Remember all those signs you read, Mario?",
+    "Full of helpful tips and tricks?",
+    "We sure had good times, out there.",
+    "Yes, they were all me.",
+    "I work fast, you know.",
+    "Congratulations!"
+  ],
+  "BOWSER": [
+    "RARRRGHH!!!",
+    "Why do I get dragged to these stupid things?",
+    "Alright, you beat me, fair and square.",
+    "Don't get a big head over it!",
+    "Just you wait until my next game.",
+    "Super Bowser 64 - no, 65!",
+    "Har har har!",
+    "Congratulations!"
+  ],
+  "PIRANHA": [
+    "I don't know why I'm here.",
+    "King Bowser's invitation had a plus-one.",
+    "I guess that makes me your most iconic enemy.",
+    "Congratulations!",
+    "Do you think they'll put me in Super Smash Bros?"
+  ],
+  "MOTOS_NEW": [
+    "I'm in this game too, you know!",
+    "What? You've never seen me?",
+    "Never even heard of me?",
+    "Aw man, this is the SECOND time this happened!",
+    "Now I'm in a bad mood.",
+    "Congratulations!"
+  ],
+  "MOTOS_KNOWN": [
+    "Ahh! Mario! I made it out!",
+    "I feel like I can finally breathe!",
+    "Especially after that stinky spirit breath...",
+    "Now I can finally tell you what I was going to say.",
+    "Especially after I was so RUDELY interrupted.",
+    "The nerve of some people, I tell you...",
+    "Hmm, what was it, again?",
+    "Man, I could never remember my lines.",
+    "That's why they took me out of the game.",
+    "I'll be back for the next one...",
+    "because BETA always comes back.",
+    "Congratulations!"
+  ],
+  "TOAD": [
+    "Bup!"
+  ],
+  "PEACH_FINALE": [
+    "Oh, dear Mario, isn't this wonderful?",
+    "Having your friends here to congratulate you?",
+    "It's so nice to have a proper finale, isn't it?",
+    "Come along, now. I still have that cake for you!",
+    "Hmm... I wonder, though...",
+    "Aren't we forgetting somebody?"
+  ],
+  "MIPS": [
+    "I'm late! I'm late! I'm late for a - ",
+    "- oh! I'm here! I'm here for an important date!",
+    "Congratulations, Mario! Chasing me around was a lot of fun.",
+    "Especially when you grabbed me like that...",
+    "Perhaps I can introduce you to some friends of mine?",
+    "We'd have lots of fun together!",
+    "Oh, there's a Sub-Space highway that runs through here.",
+    "It's a convenient shortcut through your mind.",
+    "Just stare directly at the sun!"
+  ]
+}

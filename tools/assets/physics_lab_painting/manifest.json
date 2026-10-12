@@ -1,0 +1,1260 @@
+{
+  "preferred": "water",
+  "method": "Square crop, Lanczos resampling, RGB555 quantization; opaque alpha",
+  "choices": [
+    {
+      "name": "tower",
+      "title": "Launch tower",
+      "source": "13-tower-whole-35.png",
+      "source_sha256": "19869f865f101482e8400e6b98662e726ecc19b09708c664f9b207933fa09c19",
+      "crop": [
+        8,
+        0,
+        248,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    },
+    {
+      "name": "commons",
+      "title": "Commons and tower",
+      "source": "14-course-panorama-35.png",
+      "source_sha256": "abbf44d5f13171243df9b175af26646b0e3b157a49b122c1f17681271acd81c3",
+      "crop": [
+        48,
+        0,
+        288,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    },
+    {
+      "name": "water",
+      "title": "Water court",
+      "source": "09-pools-and-beams-35.png",
+      "source_sha256": "d840e47ce4cb1482f212a50958aec71df91ea7d877797c5562aa9226fb56c550",
+      "crop": [
+        32,
+        0,
+        272,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    },
+    {
+      "name": "workshop",
+      "title": "Platform workshop",
+      "source": "07-platforms-overlook-35.png",
+      "source_sha256": "04955db17ec8042666fc92715e39ee3cbea3c5281422067e251eab41b37f2b8f",
+      "crop": [
+        48,
+        0,
+        288,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    },
+    {
+      "name": "basin",
+      "title": "Aquatic basin",
+      "source": "11-aquatic-basin-35.png",
+      "source_sha256": "c2626789a6927d4887dc8037c1c388042dc3fc2522ba44aedc9439441ca9a253",
+      "crop": [
+        40,
+        0,
+        280,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    },
+    {
+      "name": "garden",
+      "title": "Garden and tower",
+      "source": "16-garden-tower-35.png",
+      "source_sha256": "4538ffb3073e6c4ecd6d1d9244309c5ab7fd0bbc6d51667cc5fbf44f1098c791",
+      "crop": [
+        72,
+        0,
+        312,
+        240
+      ],
+      "native_size": [
+        64,
+        64
+      ],
+      "tiles": [
+        64,
+        32
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "name": "01-tower-portrait-25",
+      "view": [
+        "01-tower-portrait",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2300,
+          1800
+        ],
+        [
+          3600,
+          1500,
+          -3350
+        ]
+      ],
+      "frame": 54,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "01-tower-portrait-35",
+      "view": [
+        "01-tower-portrait",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2300,
+          1800
+        ],
+        [
+          3600,
+          1500,
+          -3350
+        ]
+      ],
+      "frame": 64,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "01-tower-portrait-45",
+      "view": [
+        "01-tower-portrait",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2300,
+          1800
+        ],
+        [
+          3600,
+          1500,
+          -3350
+        ]
+      ],
+      "frame": 74,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "02-tower-from-east-25",
+      "view": [
+        "02-tower-from-east",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          9000,
+          2600,
+          300
+        ],
+        [
+          3600,
+          1500,
+          -3400
+        ]
+      ],
+      "frame": 99,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "02-tower-from-east-35",
+      "view": [
+        "02-tower-from-east",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          9000,
+          2600,
+          300
+        ],
+        [
+          3600,
+          1500,
+          -3400
+        ]
+      ],
+      "frame": 109,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "02-tower-from-east-45",
+      "view": [
+        "02-tower-from-east",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          9000,
+          2600,
+          300
+        ],
+        [
+          3600,
+          1500,
+          -3400
+        ]
+      ],
+      "frame": 119,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "03-switchback-profile-25",
+      "view": [
+        "03-switchback-profile",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2000,
+          850
+        ],
+        [
+          3900,
+          1400,
+          -3500
+        ]
+      ],
+      "frame": 144,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "03-switchback-profile-35",
+      "view": [
+        "03-switchback-profile",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2000,
+          850
+        ],
+        [
+          3900,
+          1400,
+          -3500
+        ]
+      ],
+      "frame": 154,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "03-switchback-profile-45",
+      "view": [
+        "03-switchback-profile",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          300,
+          2000,
+          850
+        ],
+        [
+          3900,
+          1400,
+          -3500
+        ]
+      ],
+      "frame": 164,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "04-motion-hills-25",
+      "view": [
+        "04-motion-hills",
+        [
+          -5600,
+          0,
+          -5000
+        ],
+        [
+          -9900,
+          3100,
+          1000
+        ],
+        [
+          -6500,
+          650,
+          -6300
+        ]
+      ],
+      "frame": 189,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "04-motion-hills-35",
+      "view": [
+        "04-motion-hills",
+        [
+          -5600,
+          0,
+          -5000
+        ],
+        [
+          -9900,
+          3100,
+          1000
+        ],
+        [
+          -6500,
+          650,
+          -6300
+        ]
+      ],
+      "frame": 199,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "04-motion-hills-45",
+      "view": [
+        "04-motion-hills",
+        [
+          -5600,
+          0,
+          -5000
+        ],
+        [
+          -9900,
+          3100,
+          1000
+        ],
+        [
+          -6500,
+          650,
+          -6300
+        ]
+      ],
+      "frame": 209,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "05-slopes-and-tower-25",
+      "view": [
+        "05-slopes-and-tower",
+        [
+          -5000,
+          0,
+          -5000
+        ],
+        [
+          -8500,
+          2500,
+          -8400
+        ],
+        [
+          300,
+          800,
+          -5300
+        ]
+      ],
+      "frame": 234,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "05-slopes-and-tower-35",
+      "view": [
+        "05-slopes-and-tower",
+        [
+          -5000,
+          0,
+          -5000
+        ],
+        [
+          -8500,
+          2500,
+          -8400
+        ],
+        [
+          300,
+          800,
+          -5300
+        ]
+      ],
+      "frame": 244,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "05-slopes-and-tower-45",
+      "view": [
+        "05-slopes-and-tower",
+        [
+          -5000,
+          0,
+          -5000
+        ],
+        [
+          -8500,
+          2500,
+          -8400
+        ],
+        [
+          300,
+          800,
+          -5300
+        ]
+      ],
+      "frame": 254,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "06-platform-workshop-25",
+      "view": [
+        "06-platform-workshop",
+        [
+          10000,
+          0,
+          -3000
+        ],
+        [
+          7000,
+          2300,
+          1500
+        ],
+        [
+          11700,
+          750,
+          -3900
+        ]
+      ],
+      "frame": 279,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "06-platform-workshop-35",
+      "view": [
+        "06-platform-workshop",
+        [
+          10000,
+          0,
+          -3000
+        ],
+        [
+          7000,
+          2300,
+          1500
+        ],
+        [
+          11700,
+          750,
+          -3900
+        ]
+      ],
+      "frame": 289,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "06-platform-workshop-45",
+      "view": [
+        "06-platform-workshop",
+        [
+          10000,
+          0,
+          -3000
+        ],
+        [
+          7000,
+          2300,
+          1500
+        ],
+        [
+          11700,
+          750,
+          -3900
+        ]
+      ],
+      "frame": 299,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "07-platforms-overlook-25",
+      "view": [
+        "07-platforms-overlook",
+        [
+          11500,
+          0,
+          -2000
+        ],
+        [
+          15500,
+          3200,
+          900
+        ],
+        [
+          9300,
+          400,
+          -3600
+        ]
+      ],
+      "frame": 324,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "07-platforms-overlook-35",
+      "view": [
+        "07-platforms-overlook",
+        [
+          11500,
+          0,
+          -2000
+        ],
+        [
+          15500,
+          3200,
+          900
+        ],
+        [
+          9300,
+          400,
+          -3600
+        ]
+      ],
+      "frame": 334,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "07-platforms-overlook-45",
+      "view": [
+        "07-platforms-overlook",
+        [
+          11500,
+          0,
+          -2000
+        ],
+        [
+          15500,
+          3200,
+          900
+        ],
+        [
+          9300,
+          400,
+          -3600
+        ]
+      ],
+      "frame": 344,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "08-water-court-25",
+      "view": [
+        "08-water-court",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          10500,
+          2100,
+          6000
+        ],
+        [
+          4500,
+          300,
+          11200
+        ]
+      ],
+      "frame": 369,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "08-water-court-35",
+      "view": [
+        "08-water-court",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          10500,
+          2100,
+          6000
+        ],
+        [
+          4500,
+          300,
+          11200
+        ]
+      ],
+      "frame": 379,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "08-water-court-45",
+      "view": [
+        "08-water-court",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          10500,
+          2100,
+          6000
+        ],
+        [
+          4500,
+          300,
+          11200
+        ]
+      ],
+      "frame": 389,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "09-pools-and-beams-25",
+      "view": [
+        "09-pools-and-beams",
+        [
+          6500,
+          0,
+          11000
+        ],
+        [
+          10500,
+          2900,
+          15400
+        ],
+        [
+          1500,
+          400,
+          10500
+        ]
+      ],
+      "frame": 414,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "09-pools-and-beams-35",
+      "view": [
+        "09-pools-and-beams",
+        [
+          6500,
+          0,
+          11000
+        ],
+        [
+          10500,
+          2900,
+          15400
+        ],
+        [
+          1500,
+          400,
+          10500
+        ]
+      ],
+      "frame": 424,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "09-pools-and-beams-45",
+      "view": [
+        "09-pools-and-beams",
+        [
+          6500,
+          0,
+          11000
+        ],
+        [
+          10500,
+          2900,
+          15400
+        ],
+        [
+          1500,
+          400,
+          10500
+        ]
+      ],
+      "frame": 434,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "10-collision-garden-25",
+      "view": [
+        "10-collision-garden",
+        [
+          -2000,
+          0,
+          9500
+        ],
+        [
+          -6300,
+          2400,
+          13200
+        ],
+        [
+          -300,
+          550,
+          9300
+        ]
+      ],
+      "frame": 459,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "10-collision-garden-35",
+      "view": [
+        "10-collision-garden",
+        [
+          -2000,
+          0,
+          9500
+        ],
+        [
+          -6300,
+          2400,
+          13200
+        ],
+        [
+          -300,
+          550,
+          9300
+        ]
+      ],
+      "frame": 469,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "10-collision-garden-45",
+      "view": [
+        "10-collision-garden",
+        [
+          -2000,
+          0,
+          9500
+        ],
+        [
+          -6300,
+          2400,
+          13200
+        ],
+        [
+          -300,
+          550,
+          9300
+        ]
+      ],
+      "frame": 479,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "11-aquatic-basin-25",
+      "view": [
+        "11-aquatic-basin",
+        [
+          9500,
+          0,
+          4000
+        ],
+        [
+          15200,
+          1900,
+          8500
+        ],
+        [
+          10500,
+          50,
+          4000
+        ]
+      ],
+      "frame": 504,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "11-aquatic-basin-35",
+      "view": [
+        "11-aquatic-basin",
+        [
+          9500,
+          0,
+          4000
+        ],
+        [
+          15200,
+          1900,
+          8500
+        ],
+        [
+          10500,
+          50,
+          4000
+        ]
+      ],
+      "frame": 514,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "11-aquatic-basin-45",
+      "view": [
+        "11-aquatic-basin",
+        [
+          9500,
+          0,
+          4000
+        ],
+        [
+          15200,
+          1900,
+          8500
+        ],
+        [
+          10500,
+          50,
+          4000
+        ]
+      ],
+      "frame": 524,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "12-commons-course-25",
+      "view": [
+        "12-commons-course",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          900,
+          3300,
+          3800
+        ],
+        [
+          4400,
+          950,
+          -2000
+        ]
+      ],
+      "frame": 549,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "12-commons-course-35",
+      "view": [
+        "12-commons-course",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          900,
+          3300,
+          3800
+        ],
+        [
+          4400,
+          950,
+          -2000
+        ]
+      ],
+      "frame": 559,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "12-commons-course-45",
+      "view": [
+        "12-commons-course",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          900,
+          3300,
+          3800
+        ],
+        [
+          4400,
+          950,
+          -2000
+        ]
+      ],
+      "frame": 569,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "13-tower-whole-25",
+      "view": [
+        "13-tower-whole",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          -500,
+          2800,
+          3400
+        ],
+        [
+          3600,
+          1250,
+          -3350
+        ]
+      ],
+      "frame": 54,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "13-tower-whole-35",
+      "view": [
+        "13-tower-whole",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          -500,
+          2800,
+          3400
+        ],
+        [
+          3600,
+          1250,
+          -3350
+        ]
+      ],
+      "frame": 64,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "13-tower-whole-45",
+      "view": [
+        "13-tower-whole",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          -500,
+          2800,
+          3400
+        ],
+        [
+          3600,
+          1250,
+          -3350
+        ]
+      ],
+      "frame": 74,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "14-course-panorama-25",
+      "view": [
+        "14-course-panorama",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          11500,
+          4200,
+          3700
+        ],
+        [
+          3600,
+          800,
+          -3000
+        ]
+      ],
+      "frame": 99,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "14-course-panorama-35",
+      "view": [
+        "14-course-panorama",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          11500,
+          4200,
+          3700
+        ],
+        [
+          3600,
+          800,
+          -3000
+        ]
+      ],
+      "frame": 109,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "14-course-panorama-45",
+      "view": [
+        "14-course-panorama",
+        [
+          4750,
+          120,
+          -1200
+        ],
+        [
+          11500,
+          4200,
+          3700
+        ],
+        [
+          3600,
+          800,
+          -3000
+        ]
+      ],
+      "frame": 119,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "15-water-and-tower-25",
+      "view": [
+        "15-water-and-tower",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          11400,
+          2700,
+          11300
+        ],
+        [
+          4500,
+          900,
+          -1500
+        ]
+      ],
+      "frame": 144,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "15-water-and-tower-35",
+      "view": [
+        "15-water-and-tower",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          11400,
+          2700,
+          11300
+        ],
+        [
+          4500,
+          900,
+          -1500
+        ]
+      ],
+      "frame": 154,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "15-water-and-tower-45",
+      "view": [
+        "15-water-and-tower",
+        [
+          6500,
+          0,
+          8500
+        ],
+        [
+          11400,
+          2700,
+          11300
+        ],
+        [
+          4500,
+          900,
+          -1500
+        ]
+      ],
+      "frame": 164,
+      "completed_buffer_index": 1
+    },
+    {
+      "name": "16-garden-tower-25",
+      "view": [
+        "16-garden-tower",
+        [
+          -2000,
+          0,
+          7000
+        ],
+        [
+          -4800,
+          2600,
+          5200
+        ],
+        [
+          2500,
+          850,
+          -4000
+        ]
+      ],
+      "frame": 189,
+      "completed_buffer_index": 2
+    },
+    {
+      "name": "16-garden-tower-35",
+      "view": [
+        "16-garden-tower",
+        [
+          -2000,
+          0,
+          7000
+        ],
+        [
+          -4800,
+          2600,
+          5200
+        ],
+        [
+          2500,
+          850,
+          -4000
+        ]
+      ],
+      "frame": 199,
+      "completed_buffer_index": 0
+    },
+    {
+      "name": "16-garden-tower-45",
+      "view": [
+        "16-garden-tower",
+        [
+          -2000,
+          0,
+          7000
+        ],
+        [
+          -4800,
+          2600,
+          5200
+        ],
+        [
+          2500,
+          850,
+          -4000
+        ]
+      ],
+      "frame": 209,
+      "completed_buffer_index": 1
+    }
+  ],
+  "physics-lab-painting-2026-10-07-identity": {
+    "rom_sha256": "6cb81167e37a6b533c9e213142b65c73bcd1618a3ab9d8620a271265ed47ec37",
+    "elf_sha256": "27a9db2a3070a9d3d1d340a5a41d99e9c389f8401bbd2c1886db0665fef306f2",
+    "source_model_sha256": "51e3205c9d24b68be83c4b407b1736a959bc369a880c6a34946578185c8d742f",
+    "source_collision_sha256": "e8bd0c2d75b5fc742308217e9d33236e1005cef401e616a6f70a3f99c57e50e0",
+    "capture": "320x240 completed RGBA16 framebuffers; fixed in-game cameras; HUD and Mario hidden",
+    "source_rom": "Existing GCC 16.2 US capture build from 2026-10-07; no new ROM built"
+  },
+  "wide-views-identity": {
+    "rom_sha256": "6cb81167e37a6b533c9e213142b65c73bcd1618a3ab9d8620a271265ed47ec37",
+    "elf_sha256": "27a9db2a3070a9d3d1d340a5a41d99e9c389f8401bbd2c1886db0665fef306f2",
+    "source_model_sha256": "51e3205c9d24b68be83c4b407b1736a959bc369a880c6a34946578185c8d742f",
+    "source_collision_sha256": "e8bd0c2d75b5fc742308217e9d33236e1005cef401e616a6f70a3f99c57e50e0",
+    "capture": "320x240 completed RGBA16 framebuffers; fixed in-game cameras; HUD and Mario hidden",
+    "source_rom": "Existing GCC 16.2 US capture build from 2026-10-07; no new ROM built"
+  },
+  "full_resolution": {
+    "file": "physics-lab-painting-full-resolution.png",
+    "size": [
+      240,
+      240
+    ],
+    "original_screenshot": "physics-lab-water-court-original.png",
+    "original_size": [
+      320,
+      240
+    ]
+  }
+}

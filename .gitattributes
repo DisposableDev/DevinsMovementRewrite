@@ -1,0 +1,56 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# List text files in case git doesn't characterize correctly
+*.c text eol=lf
+*.h text eol=lf
+*.s text eol=lf
+*.in text eol=lf
+*.js text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.ld text eol=lf
+*.inc text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+
+# Same for binary
+*.bin binary
+*.m64 binary
+*.png binary
+*.aiff binary
+# Local outputs and reconstructed ROM assets are excluded from source archives.
+# Hash-pinned inherited HackerSM64 dependencies are retained by the source exporter.
+build/** export-ignore
+build-gcc16/** export-ignore
+assets/rom/generated/** export-ignore
+sound/samples/instruments/05_acoustic_bass_cap.aiff export-ignore
+sound/samples/instruments/1A_slap_bass_trimmed.aiff export-ignore
+sound/samples/instruments/1B_organ_2_trimmed.aiff export-ignore
+sound/samples/instruments/22_boys_choir_trimmed.aiff export-ignore
+sound/samples/instruments/24_strings_2_cap.aiff export-ignore
+sound/samples/instruments/25_strings_3_cap.aiff export-ignore
+sound/samples/instruments/34_alto_flute_trimmed.aiff export-ignore
+sound/samples/instruments/3C_acoustic_guitar_cap.aiff export-ignore
+sound/samples/instruments/3D_trimmed.aiff export-ignore
+sound/samples/sfx_1/04_plop_trimmed.aiff export-ignore
+sound/samples/sfx_4/00_trimmed.aiff export-ignore
+sound/samples/sfx_4/06_trimmed.aiff export-ignore
+sound/samples/sfx_5/05_trimmed.aiff export-ignore
+sound/samples/sfx_5/13_trimmed.aiff export-ignore
+sound/samples/sfx_6/04_trimmed.aiff export-ignore
+sound/samples/sfx_6/05_trimmed.aiff export-ignore
+sound/samples/sfx_7/0A_trimmed.aiff export-ignore
+sound/samples/sfx_mario/07_mario_wah2_trimmed.aiff export-ignore
+sound/samples/sfx_mario/15_mario_snoring3_trimmed.aiff export-ignore
+sound/samples/sfx_mario_peach/06_mario_coughing_trimmed.aiff export-ignore
+sound/samples/sfx_mario_peach/14_peach_bake_a_cake_trimmed.aiff export-ignore
+sound/samples/sfx_terrain/03_step_spooky_trimmed.aiff export-ignore
+sound/samples/sfx_terrain/04_step_snow_trimmed.aiff export-ignore
+sound/samples/sfx_terrain/06_step_metal_trimmed.aiff export-ignore
+sound/samples/sfx_terrain/07_step_sand_trimmed.aiff export-ignore
+sound/samples/sfx_water/00_plunge_trimmed.aiff export-ignore
+sound/samples/sfx_water/01_splash_trimmed.aiff export-ignore
+textures/segment2/segment2.minus.rgba16.png export-ignore

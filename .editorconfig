@@ -1,0 +1,15 @@
+root = true
+
+[{src,include,enhancements,tests,tools}/**.{c,h,cpp,hpp,py}]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true

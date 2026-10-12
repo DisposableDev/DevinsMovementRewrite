@@ -1,0 +1,34 @@
+/aifc_decode
+/aiff_extract_codebook
+/armips
+/deflatepack
+/extract_data_for_mio
+/filesizer
+/lz4tpack
+/mio0
+/n64cksum
+/n64sym
+/n64graphics
+/patch_elf_32bit
+/rncpack
+/slienc
+/skyconv
+/tabledesign
+/textconv
+/vadpcm_enc
+/flips
+
+# Downloaded flashcart loader and interrupted extraction output
+/UNFLoader
+/UNFLoader.zip
+/unfloader-*/
+
+# Compiler-generated host tool dependencies
+/*.d
+/*.d.tmp
+
+!/ido5.3_compiler/lib/*.so
+!/ido5.3_compiler/usr/lib/*.so
+!/ido5.3_compiler/usr/lib/*.so.1
+!/ido5.3_compiler/**/*.o
+!/*.so

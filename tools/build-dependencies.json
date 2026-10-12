@@ -1,0 +1,563 @@
+{
+  "schema": 1,
+  "purpose": "Current default US N64 SDK/runtime prerequisites, preserved region audio wrapper branches, and exact GNU 2.30 host linker/runtime inputs. Hash identity is not permission or provenance. No retired inputs included.",
+  "files": [
+    {
+      "path": "lib/n64/libultra_rom.a",
+      "category": "inherited_binary_archive",
+      "bytes": 1109228,
+      "sha256": "4a59ebf1bcb7dfff18ab970a371ee22d9520eaaba13e031058638e784abf0ed4"
+    },
+    {
+      "path": "lib/libnustd.a",
+      "category": "inherited_binary_archive",
+      "bytes": 116014,
+      "sha256": "246e6c34585619da2515a49c6ced61e8f952df98a261bfec1295aceff0a37064"
+    },
+    {
+      "path": "lib/gcclib/divbreak/libgcc.a",
+      "category": "inherited_binary_archive",
+      "bytes": 7159378,
+      "sha256": "7bce45052b3f177052adc4dc20047a077b4621c8bb07311e47b6860f1fcd9eeb"
+    },
+    {
+      "path": "lib/PR/audio/aspMain.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 3616,
+      "sha256": "14e3b245e8cd4e0bdf4cbb864af82d1ccba6d3d3ff33f73cb52c5821a76f30fc"
+    },
+    {
+      "path": "lib/PR/audio/aspMain_data.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 704,
+      "sha256": "79bb2a3e8555019bc4b229f0c218f1e329ca5711bfa55c7c7f992facf2e12c83"
+    },
+    {
+      "path": "lib/PR/f3dex2pl/fifo/F3DEX2_PosLight.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 5680,
+      "sha256": "47b222ed74f194ec0b4d1ad3a6b9a4e5b7ca75a7b7a3d679df735bf84b5113d3"
+    },
+    {
+      "path": "lib/PR/f3dex2pl/fifo/F3DEX2_PosLight_data.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 1056,
+      "sha256": "b849fc0531145ee14d5f470f449ef33d0f9e3ac4a58919bade95f9d51051622d"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/F3DZEX.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 5680,
+      "sha256": "e84cb9f224f28d1d87b976ab51c2f19b3ed84870c8bd7ace534578cc7b61cbcd"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/F3DZEX_NoN.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 5680,
+      "sha256": "9b062ea6972207315ce873b1f1286234ff132ef0b729746ffe95ab4b1b7bc8e5"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/F3DZEX_NoN_data.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 1056,
+      "sha256": "1b6c8adc4e9d93761b0fda578bc95b1d5dcf29c90bd5998a193d7aef4bfd66d0"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/F3DZEX_data.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 1056,
+      "sha256": "8ee553a12f4305ad3e38f066acb61c38697b6d72855cd7de35f08956d2338c4d"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/L3DZEX.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 4496,
+      "sha256": "3497bec8b9a71f7e37ac854aaf0ae8c761eaa1d3aaa93f8613fafc2f735689b3"
+    },
+    {
+      "path": "lib/PR/f3dzex/fifo/L3DZEX_data.bin",
+      "category": "inherited_microcode_binary",
+      "bytes": 1008,
+      "sha256": "3c5c35d287c3f498adbaf4ee78efb2b8f5595167c00b38734a1590163bcec8f4"
+    },
+    {
+      "path": "lib/aspMain.s",
+      "category": "rsp_wrapper_source",
+      "bytes": 806,
+      "sha256": "2818dac8507861b8ed945f3dde31557bea2181b696d5dd7e42e336c31e5684de"
+    },
+    {
+      "path": "lib/gspF3DEX2_PosLight.fifo.s",
+      "category": "rsp_wrapper_source",
+      "bytes": 398,
+      "sha256": "fd48cfbbd60348592cfa580056bc307b447d1a9ff6a6a61103cfda83aee1bd95"
+    },
+    {
+      "path": "lib/gspF3DZEX2.NoN_PosLight.fifo.s",
+      "category": "rsp_wrapper_source",
+      "bytes": 404,
+      "sha256": "2c9d6c77b94a90587953ab3d3cbc4812aef170961e1a3bb99629f0b3b6568a50"
+    },
+    {
+      "path": "lib/gspF3DZEX2_PosLight.fifo.s",
+      "category": "rsp_wrapper_source",
+      "bytes": 380,
+      "sha256": "ce5857aecae7fee3c6f39d86b7fae4c028d87fd49dabc6e499c35e8015caa3cf"
+    },
+    {
+      "path": "lib/gspL3DZEX2_PosLight.fifo.s",
+      "category": "rsp_wrapper_source",
+      "bytes": 380,
+      "sha256": "6e9584d7885a831498e4305486a9d75a218eb40fe9795d94e165e3343434ce4e"
+    },
+    {
+      "path": "include/n64/PR/R4300.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 17486,
+      "sha256": "bb8a7702ef8dfe94c389f0c411a4f2346c506ea8766e85c332a44486a97b7b44"
+    },
+    {
+      "path": "include/n64/PR/abi.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 38378,
+      "sha256": "6e5cdd7e4c2f2d16d2a2f8b996e2e66376716c7ec1cbaccc4bfcf9a263a764fd"
+    },
+    {
+      "path": "include/n64/PR/gbi-poslight.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 4891,
+      "sha256": "6fa0914055e8a7b418209c7424fdb4c18618925a4a4aab41bf672d84a3c0be7b"
+    },
+    {
+      "path": "include/n64/PR/gbi.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 164692,
+      "sha256": "b6c5f11007aab2580b5f7358da2b3c834cbee6b790361ae80511423ed0ce5513"
+    },
+    {
+      "path": "include/n64/PR/gu.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 9296,
+      "sha256": "1d377696458db2e95cc3a306fac99ab23958d100ffee51a4b97364dac81f64b6"
+    },
+    {
+      "path": "include/n64/PR/libaudio.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 840,
+      "sha256": "b17a67f77b303bdbe4a9b97fb5956cd3a020e6c0189394c5743a478ebdf851db"
+    },
+    {
+      "path": "include/n64/PR/mbi.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2986,
+      "sha256": "8a0b32eb3cc7844a38b1b3ed1b160036b203efac0dc3c0275c53354423e40960"
+    },
+    {
+      "path": "include/n64/PR/os.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2687,
+      "sha256": "e0af7328cadb2164b18c61717d916396741cf053d32b96b0dea06f6d664ff7e2"
+    },
+    {
+      "path": "include/n64/PR/os_ai.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2386,
+      "sha256": "00fc9491d4801a3c827efeff902600ed34869aa5b2ea9eab249ab75d195623af"
+    },
+    {
+      "path": "include/n64/PR/os_cache.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2596,
+      "sha256": "8828ddbc23b4472da47051760ea80a1476c1f40e458205bed7856cbdbc578cd0"
+    },
+    {
+      "path": "include/n64/PR/os_cont.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 6604,
+      "sha256": "0041939a3f667a8d611d21357ba62b2e2e8f693b2a810e41efdcc131be02fc89"
+    },
+    {
+      "path": "include/n64/PR/os_convert.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 3254,
+      "sha256": "536e9b19554ef8282d0424604972691ac1fd53e707dd7140fccc64e97086dfa1"
+    },
+    {
+      "path": "include/n64/PR/os_debug.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 3187,
+      "sha256": "e4094c71431bb98760895bf810bd6a8d2057cea565de47da0ac050b897d8113b"
+    },
+    {
+      "path": "include/n64/PR/os_eeprom.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2808,
+      "sha256": "69ae013e060787f7f8290069e7b3d2c9825749400c592f9a5206d1fb3669efc6"
+    },
+    {
+      "path": "include/n64/PR/os_error.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2204,
+      "sha256": "eae3744bf9ee921d089714e81590226b56fca5ca2f0ef866532eb788e829b120"
+    },
+    {
+      "path": "include/n64/PR/os_exception.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 3085,
+      "sha256": "953bf8361f5e756010c45dc5f823c12183838bd723ec691a99a9fcf682e0698c"
+    },
+    {
+      "path": "include/n64/PR/os_flash.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2145,
+      "sha256": "7206e87e62400994347ff2d84bd5f563894c9c18cdbe34c0c5dd9fb2bcfa758f"
+    },
+    {
+      "path": "include/n64/PR/os_gbpak.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2398,
+      "sha256": "f69228de617493a4d815ae150e08d2230ccd44fbf67bceea57371daa3550cec8"
+    },
+    {
+      "path": "include/n64/PR/os_gio.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2194,
+      "sha256": "c0197b2afd220c07028a972ca0d5903af3064d48d8657935e3c57fc9a55f3b92"
+    },
+    {
+      "path": "include/n64/PR/os_host.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 4050,
+      "sha256": "975965648f629526f0a0a9a649d99dbd7c92629d453a4db420a8c5901c380f68"
+    },
+    {
+      "path": "include/n64/PR/os_internal.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1522,
+      "sha256": "0103aa8359ff23c9ef0b248b0721ea9df0c4557271e4146ac264d0d998b7280d"
+    },
+    {
+      "path": "include/n64/PR/os_internal_debug.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1359,
+      "sha256": "3e4f1baa87602ad77163c15990625e1fd3b9ae6cffcaabb3424dafec6d638bd0"
+    },
+    {
+      "path": "include/n64/PR/os_internal_error.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1427,
+      "sha256": "8cbf6fda108330100f65fcb888578038cf3208a13a676916318c7d488c873ea9"
+    },
+    {
+      "path": "include/n64/PR/os_internal_exception.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1643,
+      "sha256": "cfcf365cbc270f022b0de024a12cd9bb4ca016e2086a3c27e88fdbf69b0728fb"
+    },
+    {
+      "path": "include/n64/PR/os_internal_gio.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1376,
+      "sha256": "032d50b58fd0f3d8831430a7125cd039efd1f56affdd8cbeb8777ab464ecba15"
+    },
+    {
+      "path": "include/n64/PR/os_internal_host.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1331,
+      "sha256": "83dda0b09da200ab1be91aeda90c2d0f52b7a282979391e05a9f4feeff1fffd1"
+    },
+    {
+      "path": "include/n64/PR/os_internal_reg.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1939,
+      "sha256": "af7ed317e323fec8813cab5d037f50f62cb48e0fbca6f56e9d06ba0054a747e5"
+    },
+    {
+      "path": "include/n64/PR/os_internal_rsp.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1616,
+      "sha256": "10281a6d388658556ec204d99d09c7a1d6799cb5dc061ee3d0e308671add4371"
+    },
+    {
+      "path": "include/n64/PR/os_internal_si.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1466,
+      "sha256": "f3c5f80019072ed4f94e115b78c9180056a6ffd4f17e969ef41ec160b5c9c9f5"
+    },
+    {
+      "path": "include/n64/PR/os_internal_thread.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1315,
+      "sha256": "f7700e0bd2c22fb6716d656435b7431c6701cbfd518f2908d13845d11be5ddd9"
+    },
+    {
+      "path": "include/n64/PR/os_internal_tlb.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1476,
+      "sha256": "8a92f6dab8597630fb326753a999f78951ac575779a48892b9485fef18520e91"
+    },
+    {
+      "path": "include/n64/PR/os_libc.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2535,
+      "sha256": "5ef0991cc42d5d490a378c54b49aebf3c58908a5bcaf6ab10107aced817bd1ba"
+    },
+    {
+      "path": "include/n64/PR/os_message.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 5267,
+      "sha256": "9a89714d42124121b0309b2b54f717e01391f5aae2efae1a474a285ebe0b2595"
+    },
+    {
+      "path": "include/n64/PR/os_motor.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1862,
+      "sha256": "b2c354847987e83bf10eed54ef0842b60bf761bb2577018cf56b05a4bb520109"
+    },
+    {
+      "path": "include/n64/PR/os_pfs.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 5489,
+      "sha256": "3206fe95216aacd91c39acbf5bca5351f745f9ca5e8e38dbf187e46c8d99f3fb"
+    },
+    {
+      "path": "include/n64/PR/os_pi.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 6913,
+      "sha256": "d7b2c713c9507de7522d7d3819d9944dffbb40c7333d10cb21e80be7030000b6"
+    },
+    {
+      "path": "include/n64/PR/os_rdp.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2406,
+      "sha256": "a14da6f7f1c4dd1b553c36a655798822bd6834cb274f6c5244744d4c4dd15516"
+    },
+    {
+      "path": "include/n64/PR/os_reg.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2257,
+      "sha256": "2a14f15494cf3754f1fe0149a8c8cab4806e843f3be6a30ad0c726443edef52d"
+    },
+    {
+      "path": "include/n64/PR/os_rsp.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2194,
+      "sha256": "ede13674c9af25912778dd077c3dd709929d43fcb9f135f6465553d0f9e8fa26"
+    },
+    {
+      "path": "include/n64/PR/os_si.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2189,
+      "sha256": "ffd228b5b0e450efcf1756d778d701be958cce724d1912792c31b3cac26f74b9"
+    },
+    {
+      "path": "include/n64/PR/os_system.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2987,
+      "sha256": "bc8afaa3362ff4851feee1feed818dd009a13c3de19435a2e09656a64bf531d8"
+    },
+    {
+      "path": "include/n64/PR/os_thread.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 4282,
+      "sha256": "d3dd1950a4433b01f888ae4ee8d56dd6a2dc7c3a2a2323847c3d7a57bedf5e9f"
+    },
+    {
+      "path": "include/n64/PR/os_time.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2931,
+      "sha256": "6acf8bb4e1c38137f4b55f441599db53bdde5e39687ff56da07b068f34c6fa84"
+    },
+    {
+      "path": "include/n64/PR/os_tlb.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2732,
+      "sha256": "68c7193e9cb95018fbaa6fc05ef3091ba22708ba183296d64eccc639d75c4290"
+    },
+    {
+      "path": "include/n64/PR/os_version.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 466,
+      "sha256": "66c2147d22b8ccf5b2eb4967c90b27dfb8c83ce07e08382fcd408c8ca0bc3873"
+    },
+    {
+      "path": "include/n64/PR/os_vi.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 8427,
+      "sha256": "7829616b8d975fabd0308066e8b952cfcf343d3b569d6050a5fdbf793a1cb1f0"
+    },
+    {
+      "path": "include/n64/PR/os_voice.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2708,
+      "sha256": "741c002f19a074370491c4b4b1f893664722e58324e4312bbb4eab30110b49b3"
+    },
+    {
+      "path": "include/n64/PR/ramrom.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 3881,
+      "sha256": "fa009dd8676f0af0ed0f0339dfe6ac2f67ad1a1b8675bdff42f71b937608a370"
+    },
+    {
+      "path": "include/n64/PR/rcp.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 33161,
+      "sha256": "61e531c5c93e7b71c167ac1d3d08254f67e5009408defa4fe5b941674c5a6b8e"
+    },
+    {
+      "path": "include/n64/PR/region.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 3236,
+      "sha256": "0c30364c12d070982b60877ea0106cebf8257ea405fc74403bd43c439b5b4b0c"
+    },
+    {
+      "path": "include/n64/PR/rmon.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1228,
+      "sha256": "b646e7e7febea89d9bfed1c1b58ebbe40a7d5378ccb50a1063cc1de5e8d3d07a"
+    },
+    {
+      "path": "include/n64/PR/sp.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 5135,
+      "sha256": "6d4dd33330efa090dcf438a5a05b82a8fa54e94db78bc7c8f4d32f16a638de18"
+    },
+    {
+      "path": "include/n64/PR/sptask.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 4810,
+      "sha256": "12b0a593a7013076fb60cf7224f0bdf25da554076e8b6f2ffe3999769e737dc5"
+    },
+    {
+      "path": "include/n64/PR/ucode.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 10492,
+      "sha256": "dfbbdc6f17ef0ed1ebd29a87bce523fade157cc42ea24ac6a4a80669e037e7e7"
+    },
+    {
+      "path": "include/n64/PR/ultraerror.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 6143,
+      "sha256": "95b3d1fda2e6de3a3a2f502a3709984bd4870084235aa1e1ea8807948070a235"
+    },
+    {
+      "path": "include/n64/PR/ultralog.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2285,
+      "sha256": "52564b52560297920881f56e81894cfd9d9ed22b4cba1f9298eb1e10b1cda449"
+    },
+    {
+      "path": "include/n64/PR/ultratypes.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 2665,
+      "sha256": "c9f578fe1aa6c6ec5af26a6e064920989bedce2e1e93aca2c3f6e3961e1d64d3"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/vadpcm_enc.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 16165,
+      "sha256": "bf14a4e5a1fb778ae3cfd9a85c4da11d3514d02fac11dbbafa8375a374861bf6"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/vpredictor.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 3060,
+      "sha256": "86502f61f25c0cd7af8aea256dd7990ab72e4f9e93b3ab80b2d829ab0de46bb8"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/quant.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 1247,
+      "sha256": "36fa8b6f72bb197c40541834fe03a147f8b2b21520d5d0b3767f4679e5d8035f"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/util.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 2019,
+      "sha256": "d7edb77e0b544e8eee9ca3e987a61fd74d9461ae36bc119fcdb5c3d7fa41bcfa"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/vencode.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 7224,
+      "sha256": "5375b75a189216e22f639d6690b45037f77ec34f04ce2aa63025858d1c395b7b"
+    },
+    {
+      "path": "tools/sdk-tools/adpcm/vadpcm.h",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 2530,
+      "sha256": "b5da2b724f26a3fb329dc70229d396c423e9e53b8bd1dd59b4d40eeb9d4fea3f"
+    },
+    {
+      "path": "tools/sdk-tools/tabledesign/codebook.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 2513,
+      "sha256": "8278cefc21c744c4bcef36f056326a73cb884dd4da90c878591e143eebf69d42"
+    },
+    {
+      "path": "tools/sdk-tools/tabledesign/estimate.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 7497,
+      "sha256": "2c7e5d1f372ce38bcbd697c6f2983189113d1aac29638f484ada85bd93531066"
+    },
+    {
+      "path": "tools/sdk-tools/tabledesign/print.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 2007,
+      "sha256": "d4615de20c0f02d7d60872a507b5f4637a662b8d1e74d92d112640bd7c81cb81"
+    },
+    {
+      "path": "tools/sdk-tools/tabledesign/tabledesign.c",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 7998,
+      "sha256": "9bba934b513b3497d9fb00c6e3a04846b1944c1efe379b8ea68dd7461e653a29"
+    },
+    {
+      "path": "tools/sdk-tools/tabledesign/tabledesign.h",
+      "category": "sdk_audio_tool_source_provenance_unresolved",
+      "bytes": 1012,
+      "sha256": "a2d44493655bcfd512dc06ccd79f8e4be7028d2545745a348191c5ca003d60d3"
+    },
+    {
+      "path": "tools/mips64-elf-ld",
+      "category": "host_toolchain_inputs",
+      "bytes": 2030440,
+      "sha256": "5ae1a0e0ef17ee759381508d32988e4f4c9ea2e6070b8201dbfe965bf2f686e5"
+    },
+    {
+      "path": "tools/libbfd-2.30.so",
+      "category": "host_toolchain_inputs",
+      "bytes": 6351544,
+      "sha256": "aea75a293e569aac340fb88b8ee1c93389c702733e0ae254e592a8ffb632d8ec"
+    },
+    {
+      "path": "lib/rspboot.o",
+      "category": "inherited_sdk_opaque_object",
+      "bytes": 1328,
+      "sha256": "e43d58af2b4ab9c7373a125964aa90ae376bb34a7d8b5c9cb7fff5420948b2c5"
+    },
+    {
+      "path": "lib/PR/f3dex2/fifo/gspF3DEX2.fifo.o",
+      "category": "inherited_sdk_opaque_object",
+      "bytes": 6624,
+      "sha256": "fb5db1e68f44979db94342a7e34ea7564799599649fcb3efd5ab769c10e75359"
+    },
+    {
+      "path": "lib/PR/audio/n_aspMain.o",
+      "category": "inherited_sdk_opaque_object",
+      "bytes": 4396,
+      "sha256": "93b92bdcc86d779cca5bf23ff0806bb3b2d3f886df5c612b1cfe023a829e20e1"
+    },
+    {
+      "path": "include/n64/ultra64.h",
+      "category": "sdk_header_provenance_unresolved",
+      "bytes": 1488,
+      "sha256": "334dac734e99fcd8b227322092501397cfcdfb89af3529de6f81953b8feff65d"
+    }
+  ],
+  "inclusion": {
+    "origin": "https://github.com/HackerN64/HackerSM64",
+    "decision_date": "2026-10-12",
+    "description": "Bundled as inherited HackerSM64 build prerequisites at the project owner's request; upstream notices and unresolved provenance are retained."
+  }
+}

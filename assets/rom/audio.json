@@ -1,0 +1,1085 @@
+{
+  "cap_filter": [
+    4.536775966839937e-06,
+    -5.692171138976155e-06,
+    -1.659893390603699e-05,
+    -7.773711254549041e-07,
+    3.262067523436912e-05,
+    2.5913668992720152e-05,
+    -3.856595134408119e-05,
+    -7.147024626962018e-05,
+    1.2361495300927055e-05,
+    0.00012169150725050051,
+    6.475796827825616e-05,
+    -0.00013936962331053654,
+    -0.00018987270389068494,
+    7.530837213106894e-05,
+    0.00032158451584070975,
+    0.00010616036546277795,
+    -0.0003777862946802183,
+    -0.0003923982372128071,
+    0.00025902737138159757,
+    0.0006953463456827958,
+    0.00010164282991016273,
+    -0.0008537066205329552,
+    -0.0006773990513578663,
+    0.0006798654069574679,
+    0.0013046879393057657,
+    -4.8710369443613966e-05,
+    -0.0016926729327913545,
+    -0.0009995702350938257,
+    0.0015062407613611638,
+    0.0021911985053582757,
+    -0.0005137891446435331,
+    -0.003036683428134174,
+    -0.0012464601822844562,
+    0.0029640948515348834,
+    0.003356146004478015,
+    -0.0015513909088181767,
+    -0.005038589763214891,
+    -0.001212324776426398,
+    0.005354423689465914,
+    0.004745271374836895,
+    -0.0035476079044372472,
+    -0.007880487817511697,
+    -0.0005557070537575751,
+    0.00912376775023839,
+    0.006244919352321783,
+    -0.007136228320561068,
+    -0.011869928680759402,
+    0.0013184800790337148,
+    0.015122233120752275,
+    0.007693388331986683,
+    -0.013629503405207462,
+    -0.017809344762287186,
+    0.005716168374606193,
+    0.025646598862169613,
+    0.0089070519306316,
+    -0.02699506822589089,
+    -0.028774998048487946,
+    0.017204784329776335,
+    0.05079299108522276,
+    0.009715965150624978,
+    -0.07087530716587058,
+    -0.06954700880383144,
+    0.08494387926353869,
+    0.30537093790759606,
+    0.4100019463419841,
+    0.30537093790759606,
+    0.08494387926353869,
+    -0.06954700880383144,
+    -0.07087530716587058,
+    0.009715965150624978,
+    0.05079299108522276,
+    0.017204784329776335,
+    -0.028774998048487946,
+    -0.02699506822589089,
+    0.0089070519306316,
+    0.025646598862169613,
+    0.005716168374606193,
+    -0.017809344762287186,
+    -0.013629503405207462,
+    0.007693388331986683,
+    0.015122233120752275,
+    0.0013184800790337148,
+    -0.011869928680759402,
+    -0.007136228320561068,
+    0.006244919352321783,
+    0.00912376775023839,
+    -0.0005557070537575751,
+    -0.007880487817511697,
+    -0.0035476079044372472,
+    0.004745271374836895,
+    0.005354423689465914,
+    -0.001212324776426398,
+    -0.005038589763214891,
+    -0.0015513909088181767,
+    0.003356146004478015,
+    0.0029640948515348834,
+    -0.0012464601822844562,
+    -0.003036683428134174,
+    -0.0005137891446435331,
+    0.0021911985053582757,
+    0.0015062407613611638,
+    -0.0009995702350938257,
+    -0.0016926729327913545,
+    -4.8710369443613966e-05,
+    0.0013046879393057657,
+    0.0006798654069574679,
+    -0.0006773990513578663,
+    -0.0008537066205329552,
+    0.00010164282991016273,
+    0.0006953463456827958,
+    0.00025902737138159757,
+    -0.0003923982372128071,
+    -0.0003777862946802183,
+    0.00010616036546277795,
+    0.00032158451584070975,
+    7.530837213106894e-05,
+    -0.00018987270389068494,
+    -0.00013936962331053654,
+    6.475796827825616e-05,
+    0.00012169150725050051,
+    1.2361495300927055e-05,
+    -7.147024626962018e-05,
+    -3.856595134408119e-05,
+    2.5913668992720152e-05,
+    3.262067523436912e-05,
+    -7.773711254549041e-07,
+    -1.659893390603699e-05,
+    -5.692171138976155e-06,
+    4.536775966839937e-06
+  ],
+  "recipes": [
+    {
+      "path": "sound/samples/instruments/05_acoustic_bass_cap.aiff",
+      "source": "sound/samples/instruments/05_acoustic_bass.aiff",
+      "source_sha256": "516d4a730aaa07776df17629ce345c0c32c69f554a5fd4bcc529a48f0ec4a63e",
+      "sha256": "c8c61b75900a6a2bf7a553c35b0a85b750def5695781daefee5702c44e88150d",
+      "kind": "half_rate",
+      "rate": "400e94d1a31e00000000"
+    },
+    {
+      "path": "sound/samples/instruments/1A_slap_bass_trimmed.aiff",
+      "source": "sound/samples/instruments/1A_slap_bass.aiff",
+      "source_sha256": "af0b1315f50de2a787d47815b91dc08b0012f77928b8c54e6f88eacbd101a4b5",
+      "sha256": "84a779cd7722f6a870330a89a73a3ccb0e13981bb04366ae7f1c6a51e99b536a",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00007cda"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "090010"
+        ],
+        [
+          "copy",
+          28,
+          24
+        ],
+        [
+          "literal",
+          "236c057374617274000200003dea0365"
+        ],
+        [
+          "copy",
+          68,
+          130
+        ],
+        [
+          "literal",
+          "7c1a"
+        ],
+        [
+          "copy",
+          240,
+          279
+        ],
+        [
+          "literal",
+          "01fffe"
+        ],
+        [
+          "copy",
+          880,
+          31488
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/instruments/1B_organ_2_trimmed.aiff",
+      "source": "sound/samples/instruments/1B_organ_2.aiff",
+      "source_sha256": "2967ca97583af8060bb09dfd57acf3e49f99eb43b7013d4b99b9a33af337f1fb",
+      "sha256": "20e7f734c602f2b25e245fbee6309e61cd5f50f33b764b38eada797b6e1ae518",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000db42"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "3d0010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "65057374617274000200006d220365"
+        ],
+        [
+          "copy",
+          68,
+          131
+        ],
+        [
+          "literal",
+          "82000000000000000000000006000d0013001a00210027002d00320038003f00440047"
+        ],
+        [
+          "copy",
+          336,
+          55904
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/instruments/22_boys_choir_trimmed.aiff",
+      "source": "sound/samples/instruments/22_boys_choir.aiff",
+      "source_sha256": "a65ef1d3a7815d4ebee441ffcdfa47f5e51cda9ac29638a05355890681172251",
+      "sha256": "2179b2881bc54fb9565985fd0c52e1a2f9a0b12c5093b843278a85ede62de232",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000c44a"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "c10010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "b90573746172740002000061ac0365"
+        ],
+        [
+          "copy",
+          68,
+          131
+        ],
+        [
+          "literal",
+          "8a0000000000000000000000170031"
+        ],
+        [
+          "copy",
+          244,
+          50044
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/instruments/24_strings_2_cap.aiff",
+      "source": "sound/samples/instruments/24_strings_2.aiff",
+      "source_sha256": "c53d06d96db9a02311e1dc3bbe19cf7db8a9010ef6c2707a4681daae04dd31a8",
+      "sha256": "0323a5e5423e66d59b04b8981294386c807b8bacecbd31aeff47a3cc5b3c84f2",
+      "kind": "half_rate",
+      "rate": "400d9d7d787600000000"
+    },
+    {
+      "path": "sound/samples/instruments/25_strings_3_cap.aiff",
+      "source": "sound/samples/instruments/25_strings_3.aiff",
+      "source_sha256": "33e9726149a3e0447ec36ab3125738d13b78ae926e055ee688652f81d56b2d65",
+      "sha256": "1fbe8ab5dbdf3e2fc7d1ec6a2a02f893e354a52eb61247a87bfcbd09a33c0732",
+      "kind": "half_rate",
+      "rate": "400cb0c6d93600000000"
+    },
+    {
+      "path": "sound/samples/instruments/34_alto_flute_trimmed.aiff",
+      "source": "sound/samples/instruments/34_alto_flute.aiff",
+      "source_sha256": "28b4add0b193927f2f875b15244d1af22ae804166148f024abc57873ced54ad8",
+      "sha256": "1e4ecc76014d03dfdb4acbc31d45d660aa668c348c196a907da31a820ff05d23",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00008286"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "40df0010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "b90573746172740002000040cb0365"
+        ],
+        [
+          "copy",
+          68,
+          130
+        ],
+        [
+          "literal",
+          "81c6000000000000000000000002000600080009"
+        ],
+        [
+          "copy",
+          316,
+          33204
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/instruments/3C_acoustic_guitar_cap.aiff",
+      "source": "sound/samples/instruments/3C_acoustic_guitar.aiff",
+      "source_sha256": "e152c501f16da65a6f555bd82381817cd13d0adb86dc9397586f581a0905648e",
+      "sha256": "def3bb89d61f0438d0bcec63321ea431ad2dee58895398beadb134d3b3b37946",
+      "kind": "half_rate",
+      "rate": "400cc66c000000000000"
+    },
+    {
+      "path": "sound/samples/instruments/3D_trimmed.aiff",
+      "source": "sound/samples/instruments/3D.aiff",
+      "source_sha256": "9adf9e2a25884bb3387edfab5fa692372027627b22ec9cf6c13b90bf9b125c56",
+      "sha256": "92bbd20c837346812089e164623b72097b3a9cbda20ce119ef9d165ad3016fae",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000ad1a"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "470010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "96"
+        ],
+        [
+          "copy",
+          140,
+          19
+        ],
+        [
+          "literal",
+          "10ff96"
+        ],
+        [
+          "copy",
+          180,
+          44160
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_1/04_plop_trimmed.aiff",
+      "source": "sound/samples/sfx_1/04_plop.aiff",
+      "source_sha256": "34992d945962a23eb0af9863a87f79b7a6ea60c39a4b71e9b7ca73a676c1b509",
+      "sha256": "a8c710a05e25648fd13b20c55ec46e68edd7c1760bf2d79d81411610a7a07fd2",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00003eb6"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "150010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "3200000000000000000000fff8ffe5ffe100460040000f"
+        ],
+        [
+          "copy",
+          216,
+          15900
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_4/00_trimmed.aiff",
+      "source": "sound/samples/sfx_4/00.aiff",
+      "source_sha256": "f8448e5ab36cc4149036c923cbc000875d790528a667645af91a6e312afea5b1",
+      "sha256": "1f9bb4d2bdd4c6515c06527a269b591c212ed9614aea4d643f9453ca498002d7",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00006630"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "b40010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "130573746172740002000032960365"
+        ],
+        [
+          "copy",
+          68,
+          131
+        ],
+        [
+          "literal",
+          "7000000000000000000000ffddff81ffcb"
+        ],
+        [
+          "copy",
+          240,
+          25952
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_4/06_trimmed.aiff",
+      "source": "sound/samples/sfx_4/06.aiff",
+      "source_sha256": "416f957825b0a7278e7a214acb1f6a43f9c6c680d8de9996cf837571763ce300",
+      "sha256": "0ce281c7eb6a03c71986e61f52994eeaaa164fb5ad05383b49d5b88f33f40cde",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000024ea"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "110010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "7a0573746172740002000011f60365"
+        ],
+        [
+          "copy",
+          68,
+          131
+        ],
+        [
+          "literal",
+          "2a00000000000000000000005900b7"
+        ],
+        [
+          "copy",
+          308,
+          9244
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_5/05_trimmed.aiff",
+      "source": "sound/samples/sfx_5/05.aiff",
+      "source_sha256": "91289b25ed5744f92012759a963c8c814678767635f0fc4bcb4295bc3513cba8",
+      "sha256": "8000a5513ec27d6fedc96095ae486445a86697014f2bf3a799741f4cc7cc0033",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000c45c"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "61e80010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "c3d800000000000000000000002a005b009000c600fc01290149"
+        ],
+        [
+          "copy",
+          660,
+          50112
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_5/13_trimmed.aiff",
+      "source": "sound/samples/sfx_5/13.aiff",
+      "source_sha256": "25b121845da1b47e4187391107e16d7591e7026fa07428f1e950107d7b4ef86e",
+      "sha256": "2c4bdc4fd03cf1879e74c18535c5372e41d4632e6f61456eb3dd85f4ef0fde9d",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000ca32"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "64b50010"
+        ],
+        [
+          "copy",
+          28,
+          25
+        ],
+        [
+          "literal",
+          "790573746172740002000064980365"
+        ],
+        [
+          "copy",
+          68,
+          130
+        ],
+        [
+          "literal",
+          "c97200000000000000000000ffe7ffb8ff7cff3eff0cfef3"
+        ],
+        [
+          "copy",
+          372,
+          51548
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_6/04_trimmed.aiff",
+      "source": "sound/samples/sfx_6/04.aiff",
+      "source_sha256": "8cd7b8e0cebe774424d2746d60ac6aad80daea735c9e3268e49812fa9dd6110c",
+      "sha256": "c514db6018b47b9a141555fe43ad8167639852e8b37c4cc577cf67d8d3333517",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00002724"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "4c0010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "a00000000000000000000000070004fff600120013"
+        ],
+        [
+          "copy",
+          200,
+          9868
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_6/05_trimmed.aiff",
+      "source": "sound/samples/sfx_6/05.aiff",
+      "source_sha256": "598e6def5975f1fee18fd07778ffce875637b95efa92138f238ca09255f2b471",
+      "sha256": "aa678c79c0920a455a54df8d7f4b07f1c06d9b84a194dfaabba6fc29e6564538",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00005a32"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "2cd30010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "59ae00000000000000000000ffecfffa006a0120"
+        ],
+        [
+          "copy",
+          632,
+          22940
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_7/0A_trimmed.aiff",
+      "source": "sound/samples/sfx_7/0A.aiff",
+      "source_sha256": "6360c22ab12b999ecef58f1613549bca879f782cacac8552fa55333087a61249",
+      "sha256": "28404b4cdef05d3954097d076128442c3aecfc996965678c397303a13b470ac0",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000055d2"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "2aa30010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "554e00000000000000000000fffcfff9fff6fff0"
+        ],
+        [
+          "copy",
+          408,
+          21820
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_mario/07_mario_wah2_trimmed.aiff",
+      "source": "sound/samples/sfx_mario/07_mario_wah2.aiff",
+      "source_sha256": "3a47b4d0ae803eaf0bc0ca07bfbabbebf026fc9966e04c7baeb6ca5858a4e4c0",
+      "sha256": "f027d42ef1486d68177c83e11245a5a729f2b3fdcbfa67741fdcb04111e91dde",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000025b4"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "940010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "3000000000000000000000fffeffee00000008fff7ffd3fff7"
+        ],
+        [
+          "copy",
+          220,
+          9496
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_mario/15_mario_snoring3_trimmed.aiff",
+      "source": "sound/samples/sfx_mario/15_mario_snoring3.aiff",
+      "source_sha256": "7f46aea43252fa75d5bc1ca00c672702fab8b04dfbad703ed590ae85fb89ba9f",
+      "sha256": "ed80709b33188e624e7065909558373ae50b0433308b0932d02036aa419ebd76",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0005510c"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "a8400010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "5088000000000000000000000000000000030005001400240023"
+        ],
+        [
+          "copy",
+          1124,
+          348272
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_mario_peach/06_mario_coughing_trimmed.aiff",
+      "source": "sound/samples/sfx_mario_peach/06_mario_coughing.aiff",
+      "source_sha256": "2577ae9139503d65d81176fd6e47cacb7e3143479ce4cc661d88870b60ce1b77",
+      "sha256": "aba5f902a69233b7612ec84b59103ab9caaeebc2b6999e81bfbd3d910b6d4da3",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00002354"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "640010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "22d0000000000000000000000005000b0011001700200028002d"
+        ],
+        [
+          "copy",
+          348,
+          8888
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_mario_peach/14_peach_bake_a_cake_trimmed.aiff",
+      "source": "sound/samples/sfx_mario_peach/14_peach_bake_a_cake.aiff",
+      "source_sha256": "51bf2390c6a5ce84afa8e8540939c55fa55a43a5004d293bdaa1185eab6eb307",
+      "sha256": "43b5a79084bf7f9583837ec642b479099ed5f52149400df2dfa604d4df52703f",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000224e6"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "2d0010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "2462"
+        ],
+        [
+          "copy",
+          148,
+          19
+        ],
+        [
+          "literal",
+          "fefffcfffafff8fff6fff6"
+        ],
+        [
+          "copy",
+          464,
+          140356
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_terrain/03_step_spooky_trimmed.aiff",
+      "source": "sound/samples/sfx_terrain/03_step_spooky.aiff",
+      "source_sha256": "57efc475ae405930c707ac2090c9dab902cbdf9bc645e7c5202f3573c4394003",
+      "sha256": "f93c1e831cd48ae0ccd59fe2e153598f130480a198b092228d71f82c76cb7a88",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00001796"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "850010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "1200000000000000000000ffe00119"
+        ],
+        [
+          "copy",
+          176,
+          5892
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_terrain/04_step_snow_trimmed.aiff",
+      "source": "sound/samples/sfx_terrain/04_step_snow.aiff",
+      "source_sha256": "22e2e0e45b9291423b969bfc82e48814502822746080ebbdbe114e6fafd9ba61",
+      "sha256": "33e1a46229c06219b18b899383ca7ac32094889955d22d39f9c5b47c2c0e04db",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000016ae"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "110010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "162a0000000000000000000000220020ffcbff3e"
+        ],
+        [
+          "copy",
+          380,
+          5656
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_terrain/06_step_metal_trimmed.aiff",
+      "source": "sound/samples/sfx_terrain/06_step_metal.aiff",
+      "source_sha256": "bca9601c97c5e52ee973e892206b0eb01b1ff65d56864b7839fc066abcc566d0",
+      "sha256": "464ef4d76bfcf38f9108b246a1d7a94393e61823cd42f5ddaec8101602023f9e",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d000059ce"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "2ca10010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "594a00000000000000000000ffd400ff00b7fde600a50288"
+        ],
+        [
+          "copy",
+          832,
+          22836
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_terrain/07_step_sand_trimmed.aiff",
+      "source": "sound/samples/sfx_terrain/07_step_sand.aiff",
+      "source_sha256": "4a8436ea3e2f90fec0a1c2d5baa04bacdb4f4ff4c0894172707f2f622eff2909",
+      "sha256": "1bd53816cb206e1432c011390c325701ddfb1deca065fe4aaf79be62d86e343c",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00002ba6"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "8d0010"
+        ],
+        [
+          "copy",
+          28,
+          111
+        ],
+        [
+          "literal",
+          "2200000000000000000000ffbafe8dfdfffde8fc54fc00"
+        ],
+        [
+          "copy",
+          200,
+          11020
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_water/00_plunge_trimmed.aiff",
+      "source": "sound/samples/sfx_water/00_plunge.aiff",
+      "source_sha256": "d81d6c20d7861d30ad8ef1cf2ad651ad4b59ead537c7221ce970d1e9f6864573",
+      "sha256": "e2f8d5542f83d6b9fb177fe1853a0f82c8b3ff6e4aecb1396d0f2e94e4652630",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d0000c56c"
+        ],
+        [
+          "copy",
+          8,
+          17
+        ],
+        [
+          "literal",
+          "700010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "c4e800000000000000000000001c00390054006e008d00b000cb"
+        ],
+        [
+          "copy",
+          292,
+          50384
+        ]
+      ]
+    },
+    {
+      "path": "sound/samples/sfx_water/01_splash_trimmed.aiff",
+      "source": "sound/samples/sfx_water/01_splash.aiff",
+      "source_sha256": "c743dafc70d23cc09aab7b512e7077e70995c8d363728adc6d7bb98d6486c87c",
+      "sha256": "06c7715a056ecbf059a3013bacf95434aba239932afdb0911bf2d4f130c5d3f5",
+      "kind": "copy",
+      "operations": [
+        [
+          "literal",
+          "464f524d00004a62"
+        ],
+        [
+          "copy",
+          8,
+          16
+        ],
+        [
+          "literal",
+          "24eb0010"
+        ],
+        [
+          "copy",
+          28,
+          110
+        ],
+        [
+          "literal",
+          "49de000000000000000000000056ff93fea9ffbbfe34f8c2"
+        ],
+        [
+          "copy",
+          268,
+          18888
+        ]
+      ]
+    }
+  ]
+}

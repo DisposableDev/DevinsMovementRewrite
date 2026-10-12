@@ -1,0 +1,239 @@
+# --------------------------------------
+# General Rules
+# --------------------------------------
+
+# obtain a list of segments from the *.c files in bin directory
+SEGMENTS := \
+    $(notdir $(basename $(wildcard bin/*.c))) \
+    $(addprefix $(VERSION)/,$(notdir $(basename $(wildcard bin/$(VERSION)/*.c)))) \
+    $(addsuffix _skybox,$(notdir $(basename $(wildcard textures/skyboxes/*.png))))
+
+# Directories containing PNG files
+TEXTURE_DIRS := \
+    $(wildcard textures/*/) \
+    $(filter %/,$(wildcard actors/*/))
+
+# NOTE: textures assume naming convention "texture.<encoding>.png" generates "texture.<encoding>"
+
+ACTOR_GROUPS := \
+    group0  \
+    group1  \
+    group2  \
+    group3  \
+    group4  \
+    group5  \
+    group6  \
+    group7  \
+    group8  \
+    group9  \
+    group10 \
+    group11 \
+    group12 \
+    group13 \
+    group14 \
+    group15 \
+    group16 \
+    group17 \
+    common0 \
+    common1
+
+LEVEL_FILES := $(addsuffix leveldata,$(LEVEL_DIRS))
+
+LEVEL_ELF_FILES := $(foreach level_dir,$(LEVEL_DIRS),$(BUILD_DIR)/levels/$(level_dir)leveldata.elf)
+
+SEG_FILES := \
+    $(SEGMENTS:%=$(BUILD_DIR)/bin/%.elf) \
+    $(ACTOR_GROUPS:%=$(BUILD_DIR)/actors/%.elf) \
+    $(LEVEL_FILES:%=$(BUILD_DIR)/levels/%.elf)
+
+YAY0_FILES := \
+    $(SEGMENTS:%=$(BUILD_DIR)/bin/%.szp) \
+    $(ACTOR_GROUPS:%=$(BUILD_DIR)/actors/%.szp) \
+    $(LEVEL_FILES:%=$(BUILD_DIR)/levels/%.szp)
+
+YAY0_OBJ_FILES := $(YAY0_FILES:.szp=.szp.o)
+
+
+# --------------------------------------
+# Actor Rules
+# --------------------------------------
+
+ACTOR_TEXTURES := $(wildcard actors/*/*.png)
+ACTOR_TEXTURES_INC_C := $(ACTOR_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+
+# Actor dependencies
+$(BUILD_DIR)/actors/group0.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group1.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group2.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group3.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group4.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group5.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group6.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group7.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group8.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group9.o:  | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group10.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group11.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group12.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group13.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group14.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group15.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group16.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/group17.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/common0.o: | $(ACTOR_TEXTURES_INC_C)
+$(BUILD_DIR)/actors/common1.o: | $(ACTOR_TEXTURES_INC_C)
+
+# Actor Elf Files
+$(BUILD_DIR)/actors/group0.elf:  SEGMENT_ADDRESS := 0x04000000
+$(BUILD_DIR)/actors/group1.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group2.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group3.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group4.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group5.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group6.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group7.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group8.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group9.elf:  SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group10.elf: SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group11.elf: SEGMENT_ADDRESS := 0x05000000
+$(BUILD_DIR)/actors/group12.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/group13.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/group14.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/group15.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/group16.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/group17.elf: SEGMENT_ADDRESS := 0x06000000
+$(BUILD_DIR)/actors/common0.elf: SEGMENT_ADDRESS := 0x08000000
+$(BUILD_DIR)/actors/common1.elf: SEGMENT_ADDRESS := 0x03000000
+
+# --------------------------------------
+# Level Rules
+# --------------------------------------
+
+$(BUILD_DIR)/levels/%/leveldata.elf: SEGMENT_ADDRESS := 0x07000000
+
+# HACKERSM64_DO: Generate these rules from the level configs?
+
+define level_rules =
+    $(1)_SEG7_FILES     := $$(patsubst %.png,%.inc.c,$$(wildcard levels/$(1)/*.png))
+    $$(BUILD_DIR)/levels/$(1)/leveldata.o: $$(addprefix $$(BUILD_DIR)/,$$($(1)_SEG7_FILES))
+    $$(BUILD_DIR)/levels/$(1)/leveldata.elf: TEXTURE_BIN := $(2)
+endef
+
+ifeq ($(QUALITY_CONFIG_ONLY),)
+ifneq ($(MAKECMDGOALS),clean)
+ifneq ($(MAKECMDGOALS),distclean)
+ifeq ($(DRY_RUN),)
+$(BUILD_DIR)/level_rules.mk: levels/level_rules.mk levels/level_defines.h
+	$(call print,Preprocessing level make rules:,$<,$@)
+	$(V)$(CPP) $(CPPFLAGS) $(VERSION_CFLAGS) -I . -o $@ $<
+include $(BUILD_DIR)/level_rules.mk
+endif
+endif
+endif
+endif
+
+# --------------------------------------
+# Extra Level Rules
+# --------------------------------------
+$(eval $(call level_rules,intro,generic)) # Intro (Super Mario 64 Logo)
+$(eval $(call level_rules,menu,generic)) # Menu (File Select)
+
+# --------------------------------------
+# Cake Texture Rules
+# --------------------------------------
+
+# Ending cake textures are generated in a special way
+$(BUILD_DIR)/levels/ending/cake_eu.inc.c: levels/ending/cake_eu.png
+	$(call print,Splitting:,$<,$@)
+	$(V)$(SKYCONV) --type cake-eu --split $^ $(BUILD_DIR)/levels/ending
+$(BUILD_DIR)/levels/ending/cake.inc.c: levels/ending/cake.png
+	$(call print,Splitting:,$<,$@)
+	$(V)$(SKYCONV) --type cake --split $^ $(BUILD_DIR)/levels/ending
+
+# --------------------------------------
+# Texture Bin Rules
+# --------------------------------------
+
+# Others
+SEGMENT2_TEXTURES               := $(wildcard $(TEXTURE_DIR)/segment2/*.png)
+TITLE_SCREEN_BG_TEXTURES        := $(wildcard $(TEXTURE_DIR)/title_screen_bg/*.png)
+TITLE_SCREEN_BG_TEXTURES        += $(TEXTURE_DIR)/custom/rumble_pak_supported.rgba16.png
+SPOOKY_TEXTURES                 := $(wildcard $(TEXTURE_DIR)/spooky/*.png)
+GENERIC_TEXTURES                := $(wildcard $(TEXTURE_DIR)/generic/*.png)
+OUTSIDE_TEXTURES                := $(wildcard $(TEXTURE_DIR)/outside/*.png)
+SNOW_TEXTURES                   := $(wildcard $(TEXTURE_DIR)/snow/*.png)
+EFFECT_TEXTURES                 := $(wildcard $(TEXTURE_DIR)/effect/*.png)
+CAVE_TEXTURES                   := $(wildcard $(TEXTURE_DIR)/cave/*.png)
+INSIDE_TEXTURES                 := $(wildcard $(TEXTURE_DIR)/inside/*.png)
+WATER_TEXTURES                  := $(wildcard $(TEXTURE_DIR)/water/*.png)
+FIRE_TEXTURES_TEXTURES          := $(wildcard $(TEXTURE_DIR)/fire/*.png)
+SKY_TEXTURES                    := $(wildcard $(TEXTURE_DIR)/sky/*.png)
+MACHINE_TEXTURES                := $(wildcard $(TEXTURE_DIR)/machine/*.png)
+MOUNTAIN_TEXTURES               := $(wildcard $(TEXTURE_DIR)/mountain/*.png)
+GRASS_TEXTURES                  := $(wildcard $(TEXTURE_DIR)/grass/*.png)
+
+# Texture Files
+$(BUILD_DIR)/bin/segment2.o:        $(SEGMENT2_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/title_screen_bg.o: $(TITLE_SCREEN_BG_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/spooky.o:          $(SPOOKY_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/generic.o:         $(GENERIC_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/outside.o:         $(OUTSIDE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/snow.o:            $(SNOW_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/effect.o:          $(EFFECT_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/cave.o:            $(CAVE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/inside.o:          $(INSIDE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/water.o:           $(WATER_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/fire.o:            $(FIRE_TEXTURES_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/sky.o:             $(SKY_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/machine.o:         $(MACHINE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/mountain.o:        $(MOUNTAIN_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/bin/grass.o:           $(GRASS_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+
+# Others
+$(BUILD_DIR)/bin/segment2.elf:           SEGMENT_ADDRESS := 0x02000000
+$(BUILD_DIR)/bin/title_screen_bg.elf:    SEGMENT_ADDRESS := 0x0A000000
+$(BUILD_DIR)/bin/debug_level_select.elf: SEGMENT_ADDRESS := 0x07000000
+$(BUILD_DIR)/bin/effect.elf:             SEGMENT_ADDRESS := 0x0B000000
+$(BUILD_DIR)/bin/spooky.elf:             SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/generic.elf:            SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/outside.elf:            SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/snow.elf:               SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/cave.elf:               SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/inside.elf:             SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/water.elf:              SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/fire.elf:               SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/sky.elf:                SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/machine.elf:            SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/mountain.elf:           SEGMENT_ADDRESS := 0x09000000
+$(BUILD_DIR)/bin/grass.elf:              SEGMENT_ADDRESS := 0x09000000
+# EU segment 19 translations
+$(BUILD_DIR)/bin/eu/translation_de.elf:  SEGMENT_ADDRESS := 0x19000000
+$(BUILD_DIR)/bin/eu/translation_en.elf:  SEGMENT_ADDRESS := 0x19000000
+$(BUILD_DIR)/bin/eu/translation_fr.elf:  SEGMENT_ADDRESS := 0x19000000
+
+# --------------------------------------
+# Skybox Rules
+# --------------------------------------
+
+$(BUILD_DIR)/bin/%_skybox.c: textures/skyboxes/%.png
+	$(call print,Splitting:,$<,$@)
+	$(V)$(SKYCONV) --type sky --split $^ $(BUILD_DIR)/bin
+
+$(BUILD_DIR)/bin/%_skybox.elf: SEGMENT_ADDRESS := 0x0A000000
+
+# --------------------------------------
+# Misc Rules
+# --------------------------------------
+
+# intro and ipl3 textures are not compressed
+INTRO_RAW_FILES              := $(wildcard $(TEXTURE_DIR)/intro_raw/*.png)
+$(BUILD_DIR)/src/goddard/renderer.o: $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(INTRO_RAW_FILES)))
+
+IPL3_TEXTURE_FILES          := $(wildcard $(TEXTURE_DIR)/ipl3_raw/*.png)
+IPL3_RAW_FILES              := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%,$(IPL3_TEXTURE_FILES)))
+
+CRASH_TEXTURE_FILES         := $(wildcard $(TEXTURE_DIR)/crash_custom/*.png)
+CRASH_TEXTURE_C_FILES       := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(CRASH_TEXTURE_FILES)))
+
+FASTTEXT_TEXTURE_FILES      := $(wildcard $(TEXTURE_DIR)/fasttext/*.png)
+FASTTEXT_TEXTURE_C_FILES    := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(FASTTEXT_TEXTURE_FILES)))
