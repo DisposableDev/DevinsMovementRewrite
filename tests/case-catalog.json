@@ -27,7 +27,7 @@
     },
     "end_screen": {
       "file": "end_screen_test.c",
-      "sha256": "60d830741311f37f48b02c14bb621cff697820933140b60b63a269226f02b81c",
+      "sha256": "0b1265da699a07979c65787753173e5be5aba8ff5a6ba426203aa16eb9bdff95",
       "cases": [
         "end_screen.debug_departure",
         "end_screen.automatic_departure",

@@ -130,11 +130,11 @@
       "lines": [
         [
           1,
-          2194
+          2216
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "5a7b30549409170af540dc719f569225d9d00442a0552f5e8c1b07ed4df94cee"
+      "sha256": "8678a9c0a8d60b5ef997c4ab1bd619cd3380381857d5a278c9ae400f3c908820"
     },
     ".gitmodules": {
       "lines": [
@@ -155,36 +155,6 @@
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "720f9b979f03c4e154a188a6b9141a2c093c78e622f9ae17fe359b92eaacab20"
-    },
-    "CREDITS.md": {
-      "lines": [
-        [
-          1,
-          29
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "e494b8218f7d6598fafad914c2378f3ca356b6ce54a808038f7354b0a64ac736"
-    },
-    "GAMEPLAY_RULES.md": {
-      "lines": [
-        [
-          1,
-          4831
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "1a2e4b6d70ad804fc2d705938ffd80de511212873330196cc73ae7570b62d224"
-    },
-    "LICENSE.md": {
-      "lines": [
-        [
-          1,
-          70
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "2d6022ddd5f8b823aa29b88046fd3136c62caf7483c7754b2116b52724e45720"
     },
     "LICENSES/CC-BY-SA-4.0.txt": {
       "lines": [
@@ -220,41 +190,31 @@
       "lines": [
         [
           1,
-          1180
+          1198
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "4e2acf6328d8bb1273fb930d6e9b88e6b18994cb792026a68d7056b3849ea72f"
+      "sha256": "062f0d707e859b4d8921f0fe5879a11425e7dbd830bf78cab9f0e5eac219ca30"
     },
     "Makefile.split": {
       "lines": [
         [
           1,
-          237
+          239
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "372294e6e4ee3f0d980ec5993544aeefa6473b6cd177f734df23d5a2e1aed8af"
+      "sha256": "05257825a4c62d66ec47d385efd63aad8f942739532791bebae50a3530422a56"
     },
     "README.md": {
       "lines": [
         [
           1,
-          41
+          53
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "70fde8a5b35b0d4e186570f536b3bdb77776f885b894bd0f733c336b99293fae"
-    },
-    "VERSION.txt": {
-      "lines": [
-        [
-          1,
-          1
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "d0b4f9120ba026c00fa23cb84b4e1620a2e6436592e58155a5151653179572c0"
+      "sha256": "6d87ce3607eb40b399b09fdfa83d6f20727eb93963e374b0b5bdb12b6eb6d676"
     },
     "actors/breath_meter/breath_meter_five_segments.rgba16.png": {
       "lines": [
@@ -802,15 +762,25 @@
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "9722f770befe023d776c423eda9d8d9a4baaab54108126be55c5a7384fae6bfd"
     },
-    "docs/air-twirl-design.md": {
+    "credits.md": {
       "lines": [
         [
           1,
-          274
+          29
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "9f6df4499bf3fd96ac0ad8933d412128c44ae85459dd408b8303120fb5ae0ce1"
+      "sha256": "e494b8218f7d6598fafad914c2378f3ca356b6ce54a808038f7354b0a64ac736"
+    },
+    "docs/README.md": {
+      "lines": [
+        [
+          1,
+          30
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "c13fefe318e868f2944a34e12b874fe6f06e1cc4959c79d37fbcc2a81ac1fdf2"
     },
     "docs/asset-sources.md": {
       "lines": [
@@ -820,77 +790,87 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "70531579a2642c871d4579c284a10577501beecd8e8c527acd9ab6f6fa5ae3cd"
+      "sha256": "426416a8a18af43b52616965cd0dbf47d656ae7a3ba9b4787486a4335150c0b4"
     },
     "docs/build-dependencies.md": {
       "lines": [
         [
           1,
-          200
+          211
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "f8fb654eb14661cff3b2d5d0e2abe9009c87d692358a91484010104a7108a241"
+      "sha256": "4676fdc5ecb8bb2d58b9b91fc1748bfdfde6668a17faed0e8fc5bbfb9082f864"
     },
     "docs/building.md": {
       "lines": [
         [
           1,
-          83
+          96
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "df148f5025bdbc4eb5dc4960374b4940481efb50d10c54cf900de24e236e0776"
+      "sha256": "79f79027beec4e1fd2c069de99dc23e19b2e19f15a9b3d14e114fca0963afbc5"
+    },
+    "docs/contributing.md": {
+      "lines": [
+        [
+          1,
+          59
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "5941c1788c3da946c72f14ec14a6821bfe959d5cb1ce1bde2e4f133950418c00"
+    },
+    "docs/gameplay.md": {
+      "lines": [
+        [
+          1,
+          101
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "06d16823fbcc8232b3516b7fe932795f45bc2457df5f255ee82c66914229f1f5"
     },
     "docs/gcc-profiling.md": {
       "lines": [
         [
           1,
-          46
+          56
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "19e58dd90d109342b4d01b8864184d1a09306f23a8c14e99983aa6746ebc89b0"
+      "sha256": "8ac116023437b295da1dc2682f5ad13e2acd822ffd8024bfccd8270eb1b7b44d"
     },
     "docs/n64-performance.md": {
       "lines": [
         [
           1,
-          112
+          70
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "090662c51693fc13f16120f475cc477710f6bf54a6725983b46c5cda7be6e74b"
+      "sha256": "4890a2a22198733ca14580cb8e26db25548ee412d39b57be7466e927fe4a3a64"
     },
     "docs/optional-components.md": {
       "lines": [
         [
           1,
-          90
+          55
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "985b190a0e9b4038a1662d45052eefb14a2ce4facb6e253840b8077f75259737"
-    },
-    "docs/options-menu-implementation.md": {
-      "lines": [
-        [
-          1,
-          992
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "aec099fde696f08b41071ae14893f1c8763af807d943df65a00e3942a1a4bc1c"
+      "sha256": "28267832745f9da7e3335270f070eff0a2c57d664d3440f87c8eb63d6a7da32c"
     },
     "docs/performance-capture.md": {
       "lines": [
         [
           1,
-          153
+          78
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "500b0a52b265c29c485934fef89884da3fb600a924f8539242238171f70f8e68"
+      "sha256": "4538f49b4e0f59d48ec72a240dcfa9011a1e61b7421b17b622e67849670e3fef"
     },
     "docs/physics-lab-enemy-layout.png": {
       "lines": [
@@ -901,36 +881,6 @@
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "be88b554af336619bdeee6ca811a8410d78a517165ccf4c05d467d89e2dfa348"
-    },
-    "docs/physics-lab-layout-proposal.json": {
-      "lines": [
-        [
-          1,
-          1976
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "3dd16931373354dac754f1fdfe8b20ae044609e14cd597d8911c8eac483a5637"
-    },
-    "docs/physics-lab-layout-proposal.png": {
-      "lines": [
-        [
-          1,
-          1291
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "b6c7d502d9ed21b7eb9b1e0546fd52b84fc19bae2fb20d5c69cfd32a421b6691"
-    },
-    "docs/physics-lab-layout-proposal.svg": {
-      "lines": [
-        [
-          1,
-          2265
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "9751a94bb8c8c31d918e7b023a28ee4619f8af847f4e2d7484d3525b279133cd"
     },
     "docs/physics-lab-overview.png": {
       "lines": [
@@ -956,81 +906,51 @@
       "lines": [
         [
           1,
-          495
+          58
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "62928db623b21164fd2e55a615a7f177bfd631342f2cfcc958546a52aa0341a7"
+      "sha256": "a0b525a46a48a175e71b294e590ac90cd4a11f3b4076620b3200ef93e0c70192"
     },
-    "docs/rejected-moving-solids-20260926.patch": {
+    "docs/reference/player-stats.md": {
       "lines": [
         [
           1,
-          1951
+          86
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "f43eee08e0ce34e9eb13a96360bdc18ba137ab4b54600203ff02bb1e85d94037"
-    },
-    "docs/research-storage.md": {
-      "lines": [
-        [
-          1,
-          49
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "738671ae7b28963523cff671cafb5380fc50e96b0051149e6b9803b19af19a48"
-    },
-    "docs/research/collision-system-rewrite-design.md": {
-      "lines": [
-        [
-          1,
-          850
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "aba3343512de3e79300173036d05523f60d6f2bdf05ec756bef7cfbd9372c7ea"
-    },
-    "docs/sliding-stuck-recovery-proposal.md": {
-      "lines": [
-        [
-          1,
-          194
-        ]
-      ],
-      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "170c0cd6cd80f64f2a5d66cda691cde6a3588281fb1d5353a1ceb9fd13256c39"
+      "sha256": "34367f0283686f7caee0bfcf6cb89cfb3da7205274cb000b223f2a392f85bb94"
     },
     "docs/source-quality-standards.md": {
       "lines": [
         [
           1,
-          184
+          83
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "e4177e2f9a199007808e6fed44e1f90cee467b866727ed8f7b9c321fae5ae9f0"
+      "sha256": "a69545b28da94cbfc791925687923c3e4c0d8960727bebfb65d610f84bf8e670"
     },
     "docs/source-release.md": {
       "lines": [
         [
           1,
-          135
+          84
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "37b888e1c4fdfa0edac3298cac192bc8745e16874717b7c22619f236048f9885"
+      "sha256": "e797b1a112c9ca4eefd86802721dbf2b18e2d048aeead2a2e665e9068241afcd"
     },
     "extract_assets.py": {
       "lines": [
         [
           1,
-          343
+          346
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "ea85609d2c6f0325a342e98c1bcb5d099914d7aa1d2d2c82feec77a2b791b468"
+      "sha256": "5e6cef07542c22cb775ca09eb38882ed93305a38fbf3a915ef33b35176c0f7b2"
     },
     "fast64.json": {
       "lines": [
@@ -1041,6 +961,16 @@
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "66c8582a29ae9d28d28a626434ba7624c5653a93747a8e020c631809b19facd1"
+    },
+    "gameplay_rules.md": {
+      "lines": [
+        [
+          1,
+          4868
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "6a14b441edac99723b84264de8c5fa7df9ae85e2b74a04224178b4fac6eeb507"
     },
     "include/macros.inc": {
       "lines": [
@@ -1380,7 +1310,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "31d9a1dcb8f532a29bc486000ff19421c74042f9a6b170ae6f1693e58257e055"
+      "sha256": "13b4c8df302f3e048c34f6f9f75d393be3b0dff681df7e4181940670e059bd93"
     },
     "levels/physics_lab/level.yaml": {
       "lines": [
@@ -1572,6 +1502,16 @@
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "6e9584d7885a831498e4305486a9d75a218eb40fe9795d94e165e3343434ce4e"
     },
+    "licence.md": {
+      "lines": [
+        [
+          1,
+          78
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "594ddc6911ee4e540947ca5a809c19432634be59118d44e117bca297484211ad"
+    },
     "rsp/audio.s": {
       "lines": [
         [
@@ -1720,7 +1660,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "cf7a7b7bbd79f4e9a966633be01914c8bbf47e4ceba5d9b8c6499cf21b520fec"
+      "sha256": "2fd592851c44888677259b8b86466511ffbdbe21b14057c6e31b64faae2f6464"
     },
     "sound/pcm/dunkey_pause.s16be": {
       "lines": [
@@ -1750,7 +1690,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "18be19a81c7fbb869714a603e30f71171ae97aee95bacabd63929320dbe1b2c0"
+      "sha256": "e794f1b46f76fbf5175a1f99242ae50070f671602351075c5947ea0b20e69839"
     },
     "sound/pcm/simpleflips_scream.s16be": {
       "lines": [
@@ -1780,7 +1720,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "49e19cc2a5d5a0b78236b477403c66113ed9c5645563a52692d8a90f74ec0da0"
+      "sha256": "86f707805205273e4ec79370b7b6587f76335b026021cb219957126486833a07"
     },
     "sound/pcm/yoshi_coin_cake.s16be": {
       "lines": [
@@ -2306,21 +2246,21 @@
       "lines": [
         [
           1,
-          3269
+          75
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "cf504afdb489e70aec0d039c3d1c9fd8fadf182e9ec3e31187d6e412fadebe1f"
+      "sha256": "0b39f48dea421a44560ae25ce7acf9b5b59544c11837589be5b3ebe135882320"
     },
     "tests/case-catalog.json": {
       "lines": [
         [
           1,
-          1129
+          1135
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "f7a08b905fa06fce17a6b1719a6eeab9aac757ecb22b9054202c52a0e62142c8"
+      "sha256": "1bbfff35db06f1c5de3b2d308ea5cf7978522658fe28185f4342c1e836456e59"
     },
     "tests/case_catalog.py": {
       "lines": [
@@ -2440,7 +2380,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "77ed4b9c6364cbeacf72574a09ce9f11f40b6cdcbbc0cf2f0d79d6be6b5eaf9b"
+      "sha256": "5ae3ee393c339ceeaea9b65cb0a4e322a86c073c9ce37cbc3ad95949c3b71c4c"
     },
     "tests/regression_suites/clam.py": {
       "lines": [
@@ -2486,11 +2426,11 @@
       "lines": [
         [
           1,
-          109
+          112
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "961c090b6d210ae58ac6ce52bb008f0f166b443faed215deabd3bdf1d0aead47"
+      "sha256": "d1d448aeec03d53cc94890e9fb4b28ff312bc43be5c28d82eb384692f78ab292"
     },
     "tests/regression_suites/fixes.py": {
       "lines": [
@@ -2556,11 +2496,11 @@
       "lines": [
         [
           1,
-          436
+          445
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "83b57b0a37271d71b50604114c3dbab494fc235a0e163c782bcebf99a36e6c21"
+      "sha256": "b2b4c65cb129a1ea5ce6731188a16e711c29fde0897f306292b76a2068857bfd"
     },
     "tests/regression_suites/mutation_support.py": {
       "lines": [
@@ -2686,11 +2626,11 @@
       "lines": [
         [
           1,
-          108
+          110
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "307deb32e3fab6cfd52d4f15135b9d233770ffbd2275d67fd857e4e9a9409590"
+      "sha256": "bdf36240cac0deb9bd809cfd8ed8a8052fe0784ea0ef3b06938a791ca0b4ac1b"
     },
     "tests/regression_suites/twirl_speed.py": {
       "lines": [
@@ -2716,11 +2656,11 @@
       "lines": [
         [
           1,
-          63
+          72
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "4a6f4461a43e8f73d384230b48fb3a966467b7c555367e2be48360117e75a67d"
+      "sha256": "8cb31fefcd22f6c6f9bc2b061230ed793327bd9a3ab679d915a11a04339fe845"
     },
     "tests/regression_support.py": {
       "lines": [
@@ -2846,11 +2786,11 @@
       "lines": [
         [
           1,
-          846
+          941
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "8d4288e04866690d3e3857d112ab5c08df04851ef126a6e18cc076c7929f54ac"
+      "sha256": "a92a0434a731171de3b6e5ec1845ae5df1b28aea04807c24ed56b016df3629c8"
     },
     "tests/test_audit_ui_fixes.py": {
       "lines": [
@@ -2946,11 +2886,21 @@
       "lines": [
         [
           1,
-          301
+          302
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "27a89fbd0a714e3efb8e9d2bb167cd779274df9e05132c753ee16a9a27a20251"
+      "sha256": "17eb8b2886ca59add814f5cf49a83a6559f1e6531fcae89b2d5cb354b5d664ac"
+    },
+    "tests/test_build_rules.py": {
+      "lines": [
+        [
+          1,
+          145
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "a58b1cc4af21551a76fda0a7a6b1d3d442bb85bd8549afec26fba12a204dc54a"
     },
     "tests/test_butt_slide_dive_buffer.py": {
       "lines": [
@@ -2986,11 +2936,11 @@
       "lines": [
         [
           1,
-          433
+          442
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "6af7e08824c9bc4eba7fced5fa7a539757ce0fc8e44fe294ddf9f2ec38cb6cf1"
+      "sha256": "8e778149621bb7ed30d7b4309b3028d841794ea19e4a3c22357691214876c045"
     },
     "tests/test_castle_painting.py": {
       "lines": [
@@ -3122,6 +3072,16 @@
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "f7d5825a516acde729580e3cdc1e266f11e04b85a6d2c300f7ffd75083b50282"
     },
+    "tests/test_extract_assets.py": {
+      "lines": [
+        [
+          1,
+          83
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "4d184a13477c6a3b984e98ff2fd5d1391fe27ee143c6e483ff72338c444d8e11"
+    },
     "tests/test_fire_spitter_sleep.py": {
       "lines": [
         [
@@ -3156,11 +3116,11 @@
       "lines": [
         [
           1,
-          1053
+          1115
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "ba1c1b308af69adc2ce86b07c5b7be85ba66af829146b09ede4448e9f2d5eaf8"
+      "sha256": "c26141375a2718996ba83d27623b0114a6df5debeb6d7de1dc6cbea9caf896fd"
     },
     "tests/test_game_timing.py": {
       "lines": [
@@ -3176,11 +3136,11 @@
       "lines": [
         [
           1,
-          186
+          210
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "0d534c4d951faf21069b535ebfe95e04178b8a7f9dd8df2e5397b94ea6f4ee95"
+      "sha256": "b5dfe507c2f333f6ddfffd32d1a6aaf21be08f5ef69d1026a644b0a40476ebf5"
     },
     "tests/test_gcc_profile_runner.py": {
       "lines": [
@@ -3211,6 +3171,16 @@
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "d921cc4b766a504dbbb0630a927f990755bb831050c93ee7796db589434b9537"
+    },
+    "tests/test_instant_warp_ownership.py": {
+      "lines": [
+        [
+          1,
+          308
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "f4419f9d6c1fc6fed1870d54d8a05a1578947d7edb2a931461e65de609c6af41"
     },
     "tests/test_jrb_hidden_render.py": {
       "lines": [
@@ -3316,11 +3286,11 @@
       "lines": [
         [
           1,
-          194
+          269
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "f3ba5335dcca06ef64baad070015a8c2534c3db645e313865257ce25de6ff3c9"
+      "sha256": "38425575ef465c9dca79df9f4e68f0ea2a981b37c519269234366992aba3b449"
     },
     "tests/test_options_cheat_caps.py": {
       "lines": [
@@ -3336,11 +3306,11 @@
       "lines": [
         [
           1,
-          299
+          313
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "1dfc07628d92ce4a4a4077daf9aa39c08d75d34b4279e6cced256b8633ba153e"
+      "sha256": "2c5f7884755a323b65271d243ffb44c493454b0b93b5e2a5fc8ce89288cc9ddf"
     },
     "tests/test_options_debug.py": {
       "lines": [
@@ -3356,11 +3326,11 @@
       "lines": [
         [
           1,
-          144
+          264
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "b4d287cc9d201e4905831ec57c2b5e78b3d41e9b3dd8fc2929d9842a3fe305bc"
+      "sha256": "88b410a6a9cb92a6a69514342b5566636241c44a33dc6c6e5922dd7e95469951"
     },
     "tests/test_options_environment.py": {
       "lines": [
@@ -3376,11 +3346,11 @@
       "lines": [
         [
           1,
-          535
+          541
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "d5a9efa3de59393434c6b36f09a22c1c56654305848dd5d276eaee066fa4a800"
+      "sha256": "86c7cd18483478fa9372155eb04767a0f5dfd52238d72767e8250a8e4dd8c083"
     },
     "tests/test_options_speed.py": {
       "lines": [
@@ -3406,11 +3376,11 @@
       "lines": [
         [
           1,
-          290
+          292
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "976f0085359d020f97a4b5b7bb51971ef35a5a08e9e5c1fb9fd66a805b2e8596"
+      "sha256": "19c1898288c30f0b5754f9932b8c80f6bf92886a21788f3a85f641f971eb9521"
     },
     "tests/test_pause_music.py": {
       "lines": [
@@ -3431,6 +3401,16 @@
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
       "sha256": "19ae75efddc3be559d51891de0187bb0f6b89ba495b34026a68871a366fcff31"
+    },
+    "tests/test_pending_pickup.py": {
+      "lines": [
+        [
+          1,
+          228
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "ed0ce15e06193dd16e7ac61da6b0d5af34e4a4c7fde5f33c19a89f5cb2c38fa7"
     },
     "tests/test_performance_capture.py": {
       "lines": [
@@ -3596,11 +3576,11 @@
       "lines": [
         [
           1,
-          1032
+          1104
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "04ded3610e71a937bc091cbc3640010ba691719f0755057b2437fee257d94b7c"
+      "sha256": "ea7df0bfc8c523e9276fe4ae81798cbfe1601eceaebd2854d355de909b18375a"
     },
     "tests/test_regression_runner.py": {
       "lines": [
@@ -3650,7 +3630,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "bbc392e7f87e99eaf80267528e70534c3bf7f360acec9de4f60d0ebed3bc88f7"
+      "sha256": "5a92e7af097caa18786d3450a0fcc6a501ef55dbc737b7190e40be1dfa236e75"
     },
     "tests/test_sfx_source_budget.py": {
       "lines": [
@@ -4756,21 +4736,21 @@
       "lines": [
         [
           1,
-          24
+          34
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "35f9da354e0d7b8ee7a857c43eec378fad70eeb52fcc5aca08833502cec2d9fa"
+      "sha256": "8d52ed9fb9257c9da034359ed44a9fcc84136bbbe59a4a009e8901cdb6031c03"
     },
     "tools/Makefile": {
       "lines": [
         [
           1,
-          119
+          126
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "d7b30d491db6b1d137e7dce0f4ca1ae374a6f97615e1009e616e605eb9fb3e21"
+      "sha256": "9a35b284abb9e5d50a8aea404b4cce0d4ba39f7eef6256bbd6456552fb3f1f22"
     },
     "tools/assemble_sound.py": {
       "lines": [
@@ -5840,11 +5820,11 @@
       "lines": [
         [
           1,
-          218
+          220
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "7768cee28ec83e392b4ac9a7a76d4ee59c6e7d655dcae4256f1be1670102e23e"
+      "sha256": "39853b7606007d4d497182fffd84df8e5cdab8b25cddf7ba7c6289726dd11d75"
     },
     "tools/gcc_profile_gdb.py": {
       "lines": [
@@ -6124,11 +6104,11 @@
       "lines": [
         [
           1,
-          5
+          14
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "792b1af1d1deabc8d99681fa052970f875f6c22333780609b40cb37d2f6bfedd"
+      "sha256": "356199cd7c9f0e3931c7dd1f04908616eaebb3df481c92a5ed9b3ead7ebc0f97"
     },
     "tools/mario_anims_converter.py": {
       "lines": [
@@ -6318,7 +6298,7 @@
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "f22bfff0dd8e8fd4d3b0a7e422372b3519a7174d39864c0e164487b145d9e583"
+      "sha256": "0417d5d329109a6b370227a20bb3133f803d6a8f29351145f24eab6b3fe8a43d"
     },
     "tools/source_asset.py": {
       "lines": [
@@ -6392,11 +6372,21 @@
       "lines": [
         [
           1,
-          30
+          36
         ]
       ],
       "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
-      "sha256": "e2b9e06d6fceb1e9ee2dc002a48724dc9f7ef1e1032443958bbf8187dc8d1891"
+      "sha256": "a0669fd3be5f1d25eddeebf14746a0873fd38466532340042a280b8c7c650752"
+    },
+    "version.txt": {
+      "lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "reason": "Initial import: check all other source text, preserving only documented legacy whitespace lines.",
+      "sha256": "d0b4f9120ba026c00fa23cb84b4e1620a2e6436592e58155a5151653179572c0"
     }
   },
   "legacy_c": {
@@ -17490,7 +17480,7 @@
     },
     "src/game/bowser_arena.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "e50a71270297794ba4343d56693ade88591f25825e25b73bd1f7c04d827449a2"
+      "sha256": "97326ff14c1ef53bdfd6c0cea955c79c307d57fcbc7ee764de5b210e6cbd997a"
     },
     "src/game/bowser_arena.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17498,7 +17488,7 @@
     },
     "src/game/bowser_throw.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "618a4cdd303e0701772e54133682a227a2d483f709f4539484f5f1bb2f721cf0"
+      "sha256": "071705dcc0a154f2098f2b5363836e94d668013a106c572ddc54e67889c2d925"
     },
     "src/game/bowser_throw.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17602,7 +17592,7 @@
     },
     "src/game/game_init.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "375c2e0d8e3eb5b84b65beed1c42416940097ea854eba0e8daa4e699058b6b60"
+      "sha256": "ec515cdf038517d7848accbe1caaf9b839597f5fe395b615a22952a824839d80"
     },
     "src/game/game_init.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17610,15 +17600,15 @@
     },
     "src/game/game_options.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "a110eb592a68fac753205604455aefe326b44f0b7abce67880609010e1c8b349"
+      "sha256": "3907f239a3c0a6c65cd823be6121b3101967926912b5e2bacfcb7ffbee5d3b8b"
     },
     "src/game/game_options.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "9ba2375c8eac6ab3ac13fed895eb7af150375dc18267283cbdb74d6a11512372"
+      "sha256": "14123e1eea83b4c88ca7fe500be90d83a7a4145a85494efe4efabd49cbb96903"
     },
     "src/game/game_options_audio.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "6472d9a21e0344c5646ebc1fb0c3cd16e52adfd9e08789648627e33cfb080eda"
+      "sha256": "f54393249fa7d50325bd51791d6032addd9b67e4b4fba3d70a9bc44fafd4057b"
     },
     "src/game/game_options_audio.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17626,7 +17616,7 @@
     },
     "src/game/game_options_input.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "e3690d0502b00d2cd46f5e884b3dd35f065dba58972972882fde77a896b5f0e2"
+      "sha256": "e694b6050fe31698d09f37234025b1d3d0ee0fd5c1f5f137fb4b7daea5970d8c"
     },
     "src/game/game_options_input.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17634,19 +17624,19 @@
     },
     "src/game/game_options_menu.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "988b20b56e297b23dfc1de2c3983272b3ec6d88f7d1a736dfcbd6ff92aa4d819"
+      "sha256": "0f96f70344179f1c6cdedf7a7e88e2eb60126095c8f739d1b615e5d7247e0295"
     },
     "src/game/game_options_menu.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "2cdb169c0c58a7a5476910356fcad99263326432c36256479949309dcbd72cc2"
+      "sha256": "a59918cfae6a55ca2dcbea0e6511ecdbf04fde3c922e615ec2578ae356b1f212"
     },
     "src/game/game_options_menu_render.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "d59f4b0a02452760207ac8b46106742ca1eaf1b59125f95ff0a50aefb05166e4"
+      "sha256": "7fbfbc5d3d5f0e7191f5bd0c7196f01a4ae2a63b3d5c0b7ac378573109819a28"
     },
     "src/game/game_options_runtime.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "e9e5214b8a33856529eb922d2c3e815edde11c9a5ae4c16ec27fc705e9b2ece9"
+      "sha256": "14a3742c22544666ecf32be769cdf08e506dfc91d7978fc97caf8cb759246639"
     },
     "src/game/game_options_runtime.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17662,7 +17652,7 @@
     },
     "src/game/game_timing_runtime.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "76ec17e0f570b55e88215e56cd18451ccc46876dfa13ada967afe37ee4009e5c"
+      "sha256": "67bcdab3fdc7f3f080e12603748b1e81e34d9f1cb03c11c8098a9507cfb501a6"
     },
     "src/game/game_timing_runtime.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17726,11 +17716,11 @@
     },
     "src/game/interaction.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "8b55f43568e9f839fbc8f8f11f7aaa00cbcfe1d5311e8470bc51831c8c450329"
+      "sha256": "4b0c2d337405c97e8c6369e73be0691283e7c10965b8750e7aac39efee69056b"
     },
     "src/game/interaction.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "f575e5b9a559701d050fee235328928323516dc1d8f775fa8201ee21e266ae59"
+      "sha256": "274b3223750a63d3fce1ad5aeee95cda09ca0284fd793b05df2443841e94351e"
     },
     "src/game/jrb_simpleflips.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17750,11 +17740,11 @@
     },
     "src/game/level_update.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "907109fc75d159e6018772cda821dba73939e78a9e09584b73082197164d798c"
+      "sha256": "69e36a18c7fcbf741cda301523e2537f9fbf7ca7f5ea3948846cd7db681857de"
     },
     "src/game/level_update.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "c9c11560689d2a70621939dcf1f3686e8b6339e0c85f5385e882e681c01daa0d"
+      "sha256": "c5c1bee1e85ae151fc7fe97339b4daa16b13ea283f6e5f39050fc3f05bc42ef9"
     },
     "src/game/liquid_particles.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17774,7 +17764,7 @@
     },
     "src/game/mario.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "d4ec180632b090853ea108aac61adb47f51bffb452cd0e44b9d96b1fa43955bd"
+      "sha256": "fb984125b8e94383f5d12afcad7e8a0d30a42e1dabe9ff00eb18f1cf483b8959"
     },
     "src/game/mario.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17798,7 +17788,7 @@
     },
     "src/game/mario_actions_cutscene.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "695e3cf118582dafdb19efd63931a62e6b4925b18322839cbc8f9260a43961f1"
+      "sha256": "ce22f24f35689e3fb5d799b7c593e1b9b4ac8228a0eae4ffc60b35d936f48175"
     },
     "src/game/mario_actions_cutscene.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -17814,7 +17804,7 @@
     },
     "src/game/mario_actions_object.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "4fd8c9dfb44a228842b90a7c2cfea896e0899c9c2b4ba67ea018f05fb5438e8b"
+      "sha256": "29b057dde6d4696cbe45248985c8dfa808ffb7efe57649b7ec5e1b66f90693ed"
     },
     "src/game/mario_actions_object.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18114,7 +18104,7 @@
     },
     "src/game/player_stats_tracking.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "6487f3b44a2b661a7c5dc4a9318895ad1dffe2027feb1af0af82209050a7c602"
+      "sha256": "d48c0f288ed6946e89c3ff59284621420888c3808d7d414d38339f09b940848c"
     },
     "src/game/print.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18162,11 +18152,11 @@
     },
     "src/game/save_file.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "13e41b9dabc8abf251aec4c6bcaec60bc96b5b412bdaa8c88c138a02a3b9ec2f"
+      "sha256": "d34568d75733e59feee33d97f1c2d7b9bdac3a706bb9d85fba268bbccb66a017"
     },
     "src/game/save_file.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "c3d8d09aaa6cc3289801e0dc87446b4f235e061a47866ebcc3d293649fc93675"
+      "sha256": "804b56f244f10f8ce2709256aa2235d70fb0a2939ff0c6ce8ed19e8ebc0007f0"
     },
     "src/game/screen_transition.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18210,7 +18200,7 @@
     },
     "src/game/sound_init.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "8e127618d99126d5654ae8bc36838c059f0001c3c621c17a937d0cff78cdb880"
+      "sha256": "d0eafe5a90e17056abc3085870aab3a410d17cc2e8069eeac5d0e4dee93766b0"
     },
     "src/game/sound_init.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18218,7 +18208,7 @@
     },
     "src/game/spawn_object.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "8fae919c24757b4b082e3ae3d018ba2008e3dc405cfaace0d1beb63ed6f85311"
+      "sha256": "4b00e8298ae75b17c8c34e8b72b088e37fbf788b7e977c6c433d1b414a7368a3"
     },
     "src/game/spawn_object.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18442,7 +18432,7 @@
     },
     "src/menu/file_select.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "0c1cbccdf96f0066da6ba519dbdfbecc70f30ef43177c57605b292ec2bf1e6c7"
+      "sha256": "282826cd43a7fcc0ba6334a1ad3f7eabac57910d7537d90d5a6a5d15b7f5fdd5"
     },
     "src/menu/file_select.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18666,11 +18656,11 @@
     },
     "tests/bowser_moves_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "4e3ca3075a71262b36c732f83fcf8a4aba06f40d207aace0d171cc4fafba4f6a"
+      "sha256": "aab47736464f905e5182c13a816bbcc249b510ebd0fecec704c5add78f9c36d2"
     },
     "tests/bugfix_transitions_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "5a2098229204d6d64792ae189809380a44154819f7c43a066bb67b5e2dfcdba4"
+      "sha256": "d92ede7b4b117970d9e84fa65373d1525af26566bd47ea1e92f206a07a09237a"
     },
     "tests/character_rumble_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18678,7 +18668,7 @@
     },
     "tests/character_save_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "bbd2deed8abce390fe8b0d8d681db703bd8c2893de803a1968763874901339d6"
+      "sha256": "a15380cf0f9c46d39696e045b66937109a989745104ef4e22e1c371344f190cd"
     },
     "tests/character_text_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18714,7 +18704,7 @@
     },
     "tests/end_screen_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "60d830741311f37f48b02c14bb621cff697820933140b60b63a269226f02b81c"
+      "sha256": "0b1265da699a07979c65787753173e5be5aba8ff5a6ba426203aa16eb9bdff95"
     },
     "tests/enemy_bounce_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18746,7 +18736,7 @@
     },
     "tests/metal_contact_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "464ccbd38cced47e1c2ec8175f12204cc11027c5a91cb3aeb9271872dddc9366"
+      "sha256": "02eb0605c4814294c4d8cfdf17ef341760e8fb86b3ebd18b4504848536858c47"
     },
     "tests/object_platform_motion_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18758,7 +18748,7 @@
     },
     "tests/particle_budget_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "a84ee38aa8cc5dc4daf91c6f14902d5113d3c3fd254195dc2a2ae9e869bc10c7"
+      "sha256": "645f58300fe9034d9eb0e7955b4fd20b9ee10ce710b0f25ad29e2d8b52ff2ad9"
     },
     "tests/pause_easter_egg_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18794,7 +18784,7 @@
     },
     "tests/player_stats_menu_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "97d2c606d0e670ea083d24180908a66213fecaf8023a60ab525e137e2f4ab474"
+      "sha256": "49da11eb6bb164cb53512cc66c755f3f8cd2103c2eb957e48ebda0b0cdbe2637"
     },
     "tests/player_stats_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18850,7 +18840,7 @@
     },
     "tests/twirl_contact_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "0113464f28807d1c18f2e849d4dc853864998fbf073a15ef162c6cf3037f0fd5"
+      "sha256": "7ae105f824c28f1d6c39e1b318b132760dec4ed68c21664399be670c58d9da82"
     },
     "tests/twirl_speed_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -18866,7 +18856,7 @@
     },
     "tests/zero_health_actions_test.c": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
-      "sha256": "4371aaf702271fa4126f3e2d9c2170824e4630d03a17b5debf3402f11da54990"
+      "sha256": "d0c94facddf9f26b4e0bc651ee4fdb184b5747c59b557f2c97e663f23798b09e"
     },
     "text/de/courses.h": {
       "reason": "Initial import only: preserve exact inherited C style; no C style pass claimed.",
@@ -19187,12 +19177,6 @@
       "lines": [
         55,
         56
-      ],
-      "reason": "Byte-identical to pre-release HEAD. Preserve inherited whitespace or required unified-diff context; only these exact lines are outside first-import style scope."
-    },
-    "tools/make_version.sh": {
-      "lines": [
-        6
       ],
       "reason": "Byte-identical to pre-release HEAD. Preserve inherited whitespace or required unified-diff context; only these exact lines are outside first-import style scope."
     },
